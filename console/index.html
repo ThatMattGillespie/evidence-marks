@@ -70,6 +70,9 @@
   .cite .n-first { display: none } .cite .n-last { display: inline }
   body.matched .answer .cite .n-first { display: inline } body.matched .answer .cite .n-last { display: none }
   body.matched .answer .cite { padding: 2px 5px }
+  .kind .cite .n-first { display: inline } .kind .cite .n-last { display: none }
+  body.raised-both .kind .cite .n-first { display: none } body.raised-both .kind .cite .n-last { display: inline }
+  body.raised-both .kind .cite { padding: 2px 5px 2px 4px; gap: 3px }
 
   /* Evidence pane */
   .pane { border-left: 1px solid var(--line); background: var(--ground-2); display: flex; flex-direction: column; min-height: 0 }
@@ -104,10 +107,11 @@
 <div class="review">
   <span>Evidence marks · Version 5 in the console</span>
   <span class="grow"></span>
-  <span>Chip in text</span>
-  <span class="seg" role="group" aria-label="Chip in text">
-    <button type="button" data-mode="raised" aria-pressed="true">Icon, raised number</button>
-    <button type="button" data-mode="matched" aria-pressed="false">Number, icon</button>
+  <span>Chips</span>
+  <span class="seg" role="group" aria-label="Chip order in the text and the sidebar">
+    <button type="button" data-mode="" aria-pressed="true">1 · Text raised, card number first</button>
+    <button type="button" data-mode="matched" aria-pressed="false">2 · Both number first</button>
+    <button type="button" data-mode="raised-both" aria-pressed="false">3 · Both raised</button>
   </span>
   <a href="../v5/">Version 5 page</a>
   <a href="../compare/">Compare</a>
@@ -147,31 +151,31 @@
   <aside class="pane" aria-label="Evidence pane">
     <div class="pane-h"><span>Sources in this chat</span><b>07</b></div>
     <div class="pane-body">
-      <article class="card" data-n="1"><span class="kind"><span class="cite abs"><b>1</b><svg aria-hidden="true"><use href="#i-abs"/></svg></span>Empirical study <span class="dot">·</span> Abstract only</span>
+      <article class="card" data-n="1"><span class="kind"><span class="cite abs"><b class="n-first">1</b><svg aria-hidden="true"><use href="#i-abs"/></svg><sup class="n-last">1</sup></span>Empirical study <span class="dot">·</span> Abstract only</span>
         <div class="card-t">DDR in Afghanistan: When state building and insecurity collide<span class="ast">*</span></div>
         <div class="card-m">2025 · German, read in English translation · *Conclusions from abstract only.</div>
       </article>
-      <article class="card" data-n="2"><span class="kind"><span class="cite lib"><b>2</b><svg aria-hidden="true"><use href="#i-full"/></svg></span>Systematic review <span class="dot">·</span> Full text</span>
+      <article class="card" data-n="2"><span class="kind"><span class="cite lib"><b class="n-first">2</b><svg aria-hidden="true"><use href="#i-full"/></svg><sup class="n-last">2</sup></span>Systematic review <span class="dot">·</span> Full text</span>
         <div class="card-t">Community-based reintegration and the limits of cash transfers</div>
         <div class="card-m">2019 · English</div>
       </article>
-      <article class="card" data-n="3"><span class="kind"><span class="cite lib"><b>3</b><svg aria-hidden="true"><use href="#i-full"/></svg></span>What Works <span class="dot">·</span> Intervention assessment</span>
+      <article class="card" data-n="3"><span class="kind"><span class="cite lib"><b class="n-first">3</b><svg aria-hidden="true"><use href="#i-full"/></svg><sup class="n-last">3</sup></span>What Works <span class="dot">·</span> Intervention assessment</span>
         <div class="card-t">Cash transfers for former combatants</div>
         <div class="card-m">Based on 14 studies · Updated 2026</div>
       </article>
-      <article class="card" data-n="4"><span class="kind"><span class="cite lib"><b>4</b><svg aria-hidden="true"><use href="#i-full"/></svg></span>What Works <span class="dot">·</span> Evidence case</span>
+      <article class="card" data-n="4"><span class="kind"><span class="cite lib"><b class="n-first">4</b><svg aria-hidden="true"><use href="#i-full"/></svg><sup class="n-last">4</sup></span>What Works <span class="dot">·</span> Evidence case</span>
         <div class="card-t">Sierra Leone: reintegration through community mediation</div>
         <div class="card-m">2002–2008 · Sierra Leone</div>
       </article>
-      <article class="card" data-n="5"><span class="kind"><span class="cite lib"><b>5</b><svg aria-hidden="true"><use href="#i-data"/></svg></span>Dataset</span>
+      <article class="card" data-n="5"><span class="kind"><span class="cite lib"><b class="n-first">5</b><svg aria-hidden="true"><use href="#i-data"/></svg><sup class="n-last">5</sup></span>Dataset</span>
         <div class="card-t">Reintegration programme outcomes by district</div>
         <div class="card-m">1990–2020 · 1,240 rows</div>
       </article>
-      <article class="card dash" data-n="6"><span class="kind"><span class="cite q"><b>6</b><svg aria-hidden="true"><use href="#i-web"/></svg></span>External website</span>
+      <article class="card dash" data-n="6"><span class="kind"><span class="cite q"><b class="n-first">6</b><svg aria-hidden="true"><use href="#i-web"/></svg><sup class="n-last">6</sup></span>External website</span>
         <div class="card-t">Former fighters return to local militias in Kunduz<span class="ast">*</span></div>
         <div class="card-m">2026 · English · afghanistan-analysts.org · *Open web source, not reviewed.</div>
       </article>
-      <article class="card dash" data-n="7"><span class="kind"><span class="cite q"><b>7</b><svg aria-hidden="true"><use href="#i-nf"/></svg></span>Not found</span>
+      <article class="card dash" data-n="7"><span class="kind"><span class="cite q"><b class="n-first">7</b><svg aria-hidden="true"><use href="#i-nf"/></svg><sup class="n-last">7</sup></span>Not found</span>
         <div class="card-t">"Unpublished review of DDR outcomes"<span class="ast">*</span></div>
         <div class="card-m">As cited by the chat · *Not in the library. Verify before relying on it.</div>
       </article>
@@ -183,7 +187,8 @@
   // Chip style switch
   document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => {
     document.querySelectorAll('.seg button').forEach(x => x.setAttribute('aria-pressed', x === b));
-    document.body.classList.toggle('matched', b.dataset.mode === 'matched');
+    document.body.classList.remove('matched', 'raised-both');
+    if (b.dataset.mode) document.body.classList.add(b.dataset.mode);
   }));
   // Clicking a chip or a card marks that source active in both places
   function activate(n) {

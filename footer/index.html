@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Answer Footer Before After</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* Values mirror src/styles/tokens.css (Rev 58). Light theme only, as the brand specifies. */
+  :root {
+    --bg: #FCFCFB; --ink: #141310; --ink-70: #4B463E; --ink-55: #706B63; --ink-35: #8C877F;
+    --line: rgba(20,19,16,.08); --line-2: rgba(20,19,16,.14);
+    --accent: #D9481C; --accent-text: #C04019;
+    --serif: "Source Serif 4", Georgia, serif; --sans: "Barlow", system-ui, sans-serif; --mono: "Space Mono", ui-monospace, monospace;
+    --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-6: 24px; --sp-8: 32px; --r: 4px;
+  }
+  * { box-sizing: border-box }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); padding: 56px 24px 96px }
+  @media (max-width: 640px) { body { padding: 32px 16px 64px } }
+  .wrap { max-width: 1180px; margin: 0 auto }
+  .vswitch { display: inline-flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase }
+  .vswitch a { color: var(--ink-55); text-decoration: none; border-bottom: 1px solid var(--line-2); padding-bottom: 2px }
+  .vswitch a[aria-current] { color: var(--ink); border-color: var(--ink) }
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-55); margin: 0 0 12px }
+  h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(28px, 4vw, 40px); line-height: 1.15; margin: 0 0 12px }
+  .lede { color: var(--ink-70); font-size: 16px; line-height: 1.55; max-width: 720px; margin: 0 0 40px }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-6) }
+  @media (max-width: 900px) { .pair { grid-template-columns: 1fr } }
+  .col h2 { font-family: var(--mono); font-weight: 700; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; margin: 0 0 var(--sp-2); color: var(--accent-text) }
+  .col > p { margin: 0 0 var(--sp-4); font-size: 14px; line-height: 1.5; color: var(--ink-70); min-height: 63px }
+  .frame { border: 1px solid var(--line-2); border-radius: var(--r); padding: var(--sp-6) }
+  .answer-end { font-family: var(--serif); font-size: 16px; line-height: 1.65; color: var(--ink-70); margin: 0 0 var(--sp-4) }
+  .state { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-55); margin: var(--sp-6) 0 var(--sp-2) }
+  .state:first-of-type { margin-top: 0 }
+
+  /* footer row */
+  .af-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2) var(--sp-4); padding-top: var(--sp-3); border-top: 1px solid var(--line) }
+  .af-src { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2); cursor: pointer }
+  .evi-head, .af-tools { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-55) }
+  .chev { width: 10px; height: 10px; color: var(--ink-55) }
+  .af-acts { margin-left: auto; display: inline-flex; gap: var(--sp-3); color: var(--ink-55) }
+  .af-acts svg { width: 14px; height: 14px }
+
+  /* chips */
+  .cite { display: inline-flex; align-items: center; gap: 3px; font-family: var(--mono); font-size: 11px; line-height: 1; padding: 2px 5px 2px 4px; border: 1px solid; border-radius: var(--r); white-space: nowrap }
+  .cite svg { width: 10px; height: 12px; flex: none }
+  .cite sup { font-size: 11px; font-weight: 700; line-height: 1; vertical-align: 0; position: relative; top: -2px }
+  .cite.old { font-size: 11px; padding: 2px 5px }
+  .cite .cm { font-size: 9px }
+  .cite.t1 { color: var(--accent-text); border-color: color-mix(in srgb, var(--accent) 40%, transparent); background: color-mix(in srgb, var(--accent) 9%, transparent) }
+  .cite.t2 { color: var(--accent-text); border-color: color-mix(in srgb, var(--accent) 40%, transparent) }
+  .cite.t3 { color: var(--ink-55); border-color: var(--ink-35); border-style: dashed }
+
+  /* after: the tally is words, not chips */
+  .tally { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--sp-1) var(--sp-3); font-family: var(--sans); font-size: 12px; color: var(--ink-70) }
+  .tally span { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap }
+  .tally svg { width: 10px; height: 12px; color: var(--accent-text) }
+  .tally .q svg { color: var(--ink-55) }
+
+  /* opened list */
+  .evi-list { display: flex; flex-direction: column; margin-top: var(--sp-2) }
+  .evi-row { display: flex; align-items: baseline; gap: var(--sp-3); padding: var(--sp-2) 0; border-top: 1px solid var(--line) }
+  .evi-row:first-child { border-top: 0 }
+  .evi-row .cite { flex: none; min-width: 28px; justify-content: center; position: relative; top: 2px }
+  .evi-row .tt { flex: 1; min-width: 0; font-size: 12px; line-height: 1.45 }
+  .evi-row .tt i { font-style: normal; font-family: var(--serif); font-size: 14px; color: var(--ink) }
+  .evi-row .tt .by { display: block; color: var(--ink-55) }
+
+  .notes { margin-top: 48px; max-width: 760px }
+  .notes h2 { font-family: var(--serif); font-weight: 400; font-size: 22px; margin: 0 0 var(--sp-3) }
+  .notes li { font-size: 15px; line-height: 1.55; color: var(--ink-70); margin-bottom: var(--sp-2) }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-full" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M3.6 4.5h4.8M3.6 7h4.8M3.6 9.5h4.8"/></symbol>
+    <symbol id="i-abs" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M3.6 4.5h4.8"/></symbol>
+    <symbol id="i-data" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M4 10.2V8.6M6 10.2V6.6M8 10.2V4.4"/></symbol>
+    <symbol id="i-web" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="6" cy="7" r="5"/><ellipse cx="6" cy="7" rx="2.1" ry="5"/><path d="M1 7h10"/></symbol>
+    <symbol id="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></symbol>
+    <symbol id="copy" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="5" y="5" width="8" height="8" rx="1.5"/><path d="M3 10.5V4.5A1.5 1.5 0 0 1 4.5 3h6"/></symbol>
+    <symbol id="up" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M5 7l3-5c1 0 2 1 1.6 2.4L9 7h3.6a1.4 1.4 0 0 1 1.4 1.7l-1 4.2a1.4 1.4 0 0 1-1.4 1.1H5zM2 7h3v7H2z"/></symbol>
+    <symbol id="down" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M11 9l-3 5c-1 0-2-1-1.6-2.4L7 9H3.4A1.4 1.4 0 0 1 2 7.3l1-4.2A1.4 1.4 0 0 1 4.4 2H11zM14 9h-3V2h3z"/></symbol>
+  </defs>
+</svg>
+
+<main class="wrap">
+  <nav class="vswitch" aria-label="Versions"><a href="../">Version 1</a><a href="../v2/">Version 2</a><a href="../v3/">Version 3</a><a href="../v4/">Version 4</a><a href="../v5/">Version 5</a><a href="../compare/">Compare</a><a href="../console/">Console</a><a href="./" aria-current="page">Footer</a></nav>
+  <p class="eyebrow">Peace Intel · Answer footer · 19 Nov 2026</p>
+  <h1>The answer footer, before and after</h1>
+  <p class="lede">The row under each chat answer. Today its tier chips show counts in the same box as citation numbers, so "3" can read as source 3. The proposal turns the tally into plain words and keeps boxed chips for citations only.</p>
+
+  <div class="pair">
+    <div class="col">
+      <h2>Before</h2>
+      <p>One chip per tier, each holding a count. The chips look identical to the citations in the answer above them.</p>
+      <div class="frame">
+        <p class="answer-end">…a pattern also described in recent field reporting.</p>
+        <p class="state">Folded</p>
+        <div class="af-row">
+          <span class="af-src"><span class="evi-head">Sources · 7</span>
+            <span class="cite old t1"><span class="cm">●</span>4</span><span class="cite old t2"><span class="cm">◐</span>1</span><span class="cite old t3"><span class="cm">↗</span>2</span>
+            <svg class="chev"><use href="#chev"/></svg></span>
+          <span class="af-tools">6 tools used</span>
+          <span class="af-acts"><svg><use href="#copy"/></svg><svg><use href="#up"/></svg><svg><use href="#down"/></svg></span>
+        </div>
+        <p class="state">Opened</p>
+        <div class="evi-list">
+          <div class="evi-row"><span class="cite old t2"><span class="cm">◐</span>1</span><span class="tt"><i>DDR in Afghanistan: When state building and insecurity collide</i><span class="by">Author · 2025</span></span></div>
+          <div class="evi-row"><span class="cite old t1"><span class="cm">●</span>2</span><span class="tt"><i>Community-based reintegration and the limits of cash transfers</i><span class="by">Author · 2019</span></span></div>
+          <div class="evi-row"><span class="cite old t1"><span class="cm">●</span>5</span><span class="tt"><i>Reintegration programme outcomes by district</i><span class="by">Dataset</span></span></div>
+          <div class="evi-row"><span class="cite old t3"><span class="cm">↗</span>6</span><span class="tt"><i>Former fighters return to local militias in Kunduz</i><span class="by">afghanistan-analysts.org</span></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <h2>After</h2>
+      <p>The tally is icon, count and a word, with no box, so it can't be mistaken for a citation. The opened list uses the same chip as the answer text.</p>
+      <div class="frame">
+        <p class="answer-end">…a pattern also described in recent field reporting.</p>
+        <p class="state">Folded</p>
+        <div class="af-row">
+          <span class="af-src"><span class="evi-head">Sources · 7</span>
+            <span class="tally"><span><svg><use href="#i-full"/></svg>3 full text</span><span><svg><use href="#i-abs"/></svg>1 abstract</span><span><svg><use href="#i-data"/></svg>1 dataset</span><span class="q"><svg><use href="#i-web"/></svg>2 web</span></span>
+            <svg class="chev"><use href="#chev"/></svg></span>
+          <span class="af-tools">6 tools used</span>
+          <span class="af-acts"><svg><use href="#copy"/></svg><svg><use href="#up"/></svg><svg><use href="#down"/></svg></span>
+        </div>
+        <p class="state">Opened</p>
+        <div class="evi-list">
+          <div class="evi-row"><span class="cite t2"><svg><use href="#i-abs"/></svg><sup>1</sup></span><span class="tt"><i>DDR in Afghanistan: When state building and insecurity collide</i><span class="by">Author · 2025 · German · *Conclusions from abstract only.</span></span></div>
+          <div class="evi-row"><span class="cite t1"><svg><use href="#i-full"/></svg><sup>2</sup></span><span class="tt"><i>Community-based reintegration and the limits of cash transfers</i><span class="by">Author · 2019</span></span></div>
+          <div class="evi-row"><span class="cite t1"><svg><use href="#i-data"/></svg><sup>5</sup></span><span class="tt"><i>Reintegration programme outcomes by district</i><span class="by">Dataset · 1990–2020</span></span></div>
+          <div class="evi-row"><span class="cite t3"><svg><use href="#i-web"/></svg><sup>6</sup></span><span class="tt"><i>Former fighters return to local militias in Kunduz</i><span class="by">afghanistan-analysts.org · *Open web source, not reviewed.</span></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notes">
+    <h2>Notes</h2>
+    <ul>
+      <li>Datasets get their own count in the tally. Today they are counted as full text.</li>
+      <li>English is not shown. Other languages appear after the year, as on the sidebar cards.</li>
+      <li>The opened list is shortened to four rows here. It lists every source in the order the answer used them.</li>
+    </ul>
+  </div>
+</main>
+</body>
+</html>

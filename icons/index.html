@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Icons Side by Side</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FCFCFB; --ink: #141310; --ink-70: #4B463E; --ink-55: #706B63; --ink-35: #8C877F;
+    --line: rgba(20,19,16,.08); --line-2: rgba(20,19,16,.14); --accent: #D9481C; --accent-text: #C04019;
+    --ground-2: color-mix(in srgb, var(--ink) 4%, var(--bg));
+    --serif: "Source Serif 4", Georgia, serif; --sans: "Barlow", system-ui, sans-serif; --mono: "Space Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); padding: 56px 24px 96px }
+  @media (max-width: 640px) { body { padding: 32px 16px 64px } }
+  .wrap { max-width: 1100px; margin: 0 auto }
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-55); margin: 0 0 12px }
+  h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(28px, 4vw, 38px); line-height: 1.15; margin: 0 0 12px }
+  h2 { font-family: var(--serif); font-weight: 400; font-size: 22px; margin: 48px 0 6px }
+  .lede, .why { color: var(--ink-70); font-size: 15px; line-height: 1.55; max-width: 720px; margin: 0 0 24px }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px }
+  .tile { border: 1px solid var(--line-2); border-radius: 4px; padding: 16px 14px 14px; display: grid; gap: 12px; align-content: start }
+  .tile.art { background: var(--ground-2) }
+  .sizes { display: flex; align-items: flex-end; gap: 16px; height: 32px }
+  .sizes svg:nth-child(1) { width: 28px; height: 32px }
+  .sizes svg:nth-child(2) { width: 20px; height: 20px }
+  .sizes svg:nth-child(3) { width: 12px; height: 14px }
+  .tile b { font-family: var(--mono); font-weight: 400; font-size: 10px; letter-spacing: .08em; text-transform: uppercase }
+  .tile span { font-family: var(--mono); font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-55) }
+  .evi { color: var(--accent-text) } .evi.q { color: var(--ink-55) }
+  .art-ic { color: var(--ink-55) }
+  /* Lucide glyphs as the app draws them: 24 grid, 1.5 stroke */
+  .lu { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round }
+
+  .row { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; padding: 20px; border: 1px solid var(--line-2); border-radius: 4px }
+  .row .pair { display: inline-flex; gap: 8px; align-items: center }
+  .row .pair svg { width: 20px; height: 20px }
+  .row .pair svg.e { width: 17px; height: 20px }
+  .row small { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-55) }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-full" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M3.6 4.5h4.8M3.6 7h4.8M3.6 9.5h4.8"/></symbol>
+    <symbol id="i-abs" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M3.6 4.5h4.8"/></symbol>
+    <symbol id="i-data" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M4 10.2V8.6M6 10.2V6.6M8 10.2V4.4"/></symbol>
+    <symbol id="i-web" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="6" cy="7" r="5"/><ellipse cx="6" cy="7" rx="2.1" ry="5"/><path d="M1 7h10"/></symbol>
+    <symbol id="i-nf" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><rect x="1" y="1" width="10" height="12" rx="1.5" stroke-dasharray="2.2 1.6"/><path d="M4.6 5.4a1.45 1.45 0 1 1 2.1 1.3c-.45.25-.7.55-.7 1.1v.3"/><circle cx="6" cy="10" r=".35" fill="currentColor"/></symbol>
+    <!-- From src/components/ui/glyphs.js -->
+    <symbol id="a-doc" viewBox="0 0 24 24" class="lu"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></symbol>
+    <symbol id="a-sheet" viewBox="0 0 24 24" class="lu"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M8 13h2"/><path d="M14 13h2"/><path d="M8 17h2"/><path d="M14 17h2"/></symbol>
+    <symbol id="a-pdf" viewBox="0 0 24 24" class="lu"><path d="M12 22h6a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v6"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M3 16v-1.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5V16"/><path d="M6 22h2"/><path d="M7 14v8"/></symbol>
+  </defs>
+</svg>
+<main class="wrap">
+  <p class="eyebrow">Peace Intel · Icons · 20 Nov 2026</p>
+  <h1>New evidence icons beside today's artifact icons</h1>
+  <p class="lede">Each icon is shown at 28px, at 20px (the artifact card size) and at 12px (the sidebar size). Evidence icons are in their real colours. Artifact icons are in their real grey, drawn exactly as the app draws them today.</p>
+
+  <h2>New evidence icons</h2>
+  <p class="why">Sources Peace Intel read. Flat pages, 1.2 stroke on a 12 × 14 grid.</p>
+  <div class="grid">
+    <div class="tile"><div class="sizes evi"><svg><use href="#i-full"/></svg><svg><use href="#i-full"/></svg><svg><use href="#i-full"/></svg></div><b>Full text</b><span>Evidence</span></div>
+    <div class="tile"><div class="sizes evi"><svg><use href="#i-abs"/></svg><svg><use href="#i-abs"/></svg><svg><use href="#i-abs"/></svg></div><b>Abstract only</b><span>Evidence</span></div>
+    <div class="tile"><div class="sizes evi"><svg><use href="#i-data"/></svg><svg><use href="#i-data"/></svg><svg><use href="#i-data"/></svg></div><b>Dataset</b><span>Evidence</span></div>
+    <div class="tile"><div class="sizes evi q"><svg><use href="#i-web"/></svg><svg><use href="#i-web"/></svg><svg><use href="#i-web"/></svg></div><b>External website</b><span>Evidence</span></div>
+    <div class="tile"><div class="sizes evi q"><svg><use href="#i-nf"/></svg><svg><use href="#i-nf"/></svg><svg><use href="#i-nf"/></svg></div><b>Not found</b><span>Error state</span></div>
+  </div>
+
+  <h2>Today's artifact icons</h2>
+  <p class="why">Files Peace Intel made for a project. Folded-corner pages, 1.5 stroke on a 24 grid (Lucide).</p>
+  <div class="grid">
+    <div class="tile art"><div class="sizes art-ic"><svg><use href="#a-doc"/></svg><svg><use href="#a-doc"/></svg><svg><use href="#a-doc"/></svg></div><b>Document</b><span>Artifact</span></div>
+    <div class="tile art"><div class="sizes art-ic"><svg><use href="#a-sheet"/></svg><svg><use href="#a-sheet"/></svg><svg><use href="#a-sheet"/></svg></div><b>Spreadsheet</b><span>Artifact</span></div>
+    <div class="tile art"><div class="sizes art-ic"><svg><use href="#a-pdf"/></svg><svg><use href="#a-pdf"/></svg><svg><use href="#a-pdf"/></svg></div><b>PDF</b><span>Artifact</span></div>
+  </div>
+
+  <h2>The pairs most likely to be confused</h2>
+  <p class="why">Side by side at the same 20px height, both in grey, so only the drawing differs.</p>
+  <div class="row">
+    <span class="pair art-ic"><svg class="e"><use href="#i-full"/></svg><svg><use href="#a-doc"/></svg></span><small>Full text vs Document</small>
+    <span class="pair art-ic"><svg class="e"><use href="#i-data"/></svg><svg><use href="#a-sheet"/></svg></span><small>Dataset vs Spreadsheet</small>
+    <span class="pair art-ic"><svg class="e"><use href="#i-abs"/></svg><svg><use href="#a-pdf"/></svg></span><small>Abstract vs PDF</small>
+  </div>
+</main>
+</body>
+</html>

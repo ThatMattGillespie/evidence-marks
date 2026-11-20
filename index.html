@@ -120,7 +120,7 @@
 </svg>
 
 <main class="wrap">
-  <nav class="vswitch" aria-label="Versions"><a href="./" aria-current="page">Version 1</a><a href="v2/">Version 2</a><a href="v3/">Version 3</a></nav>
+  <nav class="vswitch" aria-label="Versions"><a href="./" aria-current="page">Version 1</a><a href="./v2/">Version 2</a><a href="./v3/">Version 3</a><a href="./v4/">Version 4</a><a href="./compare/">Compare</a></nav>
   <header>
     <p class="eyebrow">Peace Intel · Evidence sidebar · Draft for review · 18 Nov 2026</p>
     <h1>Evidence marks: showing how much of each source we actually read</h1>
@@ -223,5 +223,12 @@
 
   <p class="foot">Every title, year, figure and website in the examples is a placeholder for layout. The colours and type follow Peace Intel's Rev 58 tokens.</p>
 </main>
+<script>
+  // ?pane shows only the sidebar mock-up, for the comparison page.
+  if (new URLSearchParams(location.search).has('pane')) {
+    const p = document.querySelector('.pane'); const m = document.querySelector('main');
+    m.replaceChildren(p); m.style.maxWidth = '360px'; document.body.style.padding = '12px';
+  }
+</script>
 </body>
 </html>

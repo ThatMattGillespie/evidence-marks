@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Evidence Marks</title>
+<meta name="description" content="Draft icon system and sidebar cards for showing how much of each source Peace Intel read.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* Values mirror src/styles/tokens.css (Rev 58). Light theme only, as the brand specifies. */
+  :root {
+    --bg: #FCFCFB;
+    --ink: #141310; --ink-70: #4B463E; --ink-55: #706B63; --ink-35: #8C877F;
+    --line: rgba(20,19,16,.08); --line-2: rgba(20,19,16,.14);
+    --accent: #D9481C; --accent-text: #C04019;
+    --ground-2: color-mix(in srgb, var(--ink) 4%, var(--bg));
+    --serif: "Source Serif 4", Georgia, serif; --sans: "Barlow", system-ui, sans-serif; --mono: "Space Mono", ui-monospace, monospace;
+    --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 20px; --sp-6: 24px; --sp-8: 32px; --r: 4px;
+  }
+  * { box-sizing: border-box }
+  html { -webkit-text-size-adjust: 100% }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); padding: 56px var(--sp-6) 96px }
+  @media (max-width: 640px) { body { padding: 32px var(--sp-4) 64px } }
+  .wrap { max-width: 1120px; margin: 0 auto }
+
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-55); margin: 0 0 var(--sp-3) }
+  h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(30px, 5vw, 44px); line-height: 1.12; margin: 0 0 var(--sp-4); max-width: 820px; text-wrap: balance }
+  h2 { font-family: var(--serif); font-weight: 400; font-size: 24px; line-height: 1.25; margin: 0 0 var(--sp-2) }
+  .lede { color: var(--ink-70); font-size: 17px; line-height: 1.55; max-width: 720px; margin: 0 }
+  .why { color: var(--ink-70); font-size: 15px; line-height: 1.55; margin: 0 0 var(--sp-5); max-width: 720px }
+  section { padding-top: 56px; margin-top: 56px; border-top: 1px solid var(--line) }
+  .label-sm { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-55); margin: 0 0 var(--sp-2) }
+
+  /* Finding */
+  .finding { margin-top: var(--sp-8); border-left: 2px solid var(--accent); padding: var(--sp-1) 0 var(--sp-1) var(--sp-5); max-width: 720px }
+  .finding p { margin: 0; font-family: var(--serif); font-size: 17px; line-height: 1.55; color: var(--ink-70) }
+  .finding cite { display: block; margin-top: var(--sp-2); font-style: normal; font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-55) }
+
+  /* Icon set */
+  .mk { color: var(--accent-text) } .mk.q { color: var(--ink-55) }
+  .icons { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--sp-3) }
+  @media (max-width: 900px) { .icons { grid-template-columns: repeat(2, minmax(0, 1fr)) } }
+  .icon-tile { border: 1px solid var(--line-2); border-radius: var(--r); padding: var(--sp-4); display: grid; gap: var(--sp-3); align-content: start }
+  .icon-tile .sizes { display: flex; align-items: flex-end; gap: var(--sp-4); height: 32px }
+  .icon-tile .sizes svg:nth-child(1) { width: 28px; height: 32px }
+  .icon-tile .sizes svg:nth-child(2) { width: 12px; height: 14px }
+  .icon-tile .sizes svg:nth-child(3) { width: 10px; height: 12px }
+  .icon-tile b { font-family: var(--mono); font-weight: 400; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink) }
+  .icon-tile p { margin: 0; font-size: 13px; line-height: 1.4; color: var(--ink-55) }
+  .icon-tile .grp { font-family: var(--mono); font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-55) }
+  .rule { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-6); margin-top: var(--sp-6); max-width: 820px }
+  @media (max-width: 640px) { .rule { grid-template-columns: 1fr } }
+  .rule p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--ink-70) }
+  .rule b { display: block; font-family: var(--mono); font-weight: 400; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); margin-bottom: var(--sp-1) }
+
+  /* Citation chip: box kept, icon first, number small and raised like a footnote */
+  .cite { display: inline-flex; align-items: flex-start; gap: 3px; font-family: var(--mono); line-height: 1; padding: 2px 4px; border: 1px solid; border-radius: var(--r); vertical-align: -1px; white-space: nowrap; cursor: pointer }
+  .cite svg { width: 10px; height: 12px; flex: none }
+  .cite sup { font-size: 11px; font-weight: 700; line-height: 1; vertical-align: 0; position: relative; top: -1px }
+  .cite.lib { color: var(--accent-text); border-color: color-mix(in srgb, var(--accent) 40%, transparent); background: color-mix(in srgb, var(--accent) 9%, transparent) }
+  .cite.abs { color: var(--accent-text); border-color: color-mix(in srgb, var(--accent) 40%, transparent) }
+  .cite.q { color: var(--ink-55); border-color: var(--ink-35); border-style: dashed }
+  .cite.solo { padding: 2px 5px }
+  .cite.solo sup { top: 0; font-size: 11px }
+
+  .answer-frame { border: 1px solid var(--line-2); border-radius: var(--r); padding: var(--sp-6); max-width: 720px }
+  .answer { font-family: var(--serif); font-size: 16px; line-height: 1.65; color: var(--ink-70) }
+  .answer p { margin: 0 0 var(--sp-3) } .answer p:last-child { margin: 0 }
+
+  /* Sidebar */
+  .sidebar-layout { display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 48px; align-items: start }
+  @media (max-width: 900px) { .sidebar-layout { grid-template-columns: minmax(0, 1fr) } }
+  .pane { background: var(--ground-2); border-radius: var(--r); border: 1px solid var(--line) }
+  .pane-h { display: flex; justify-content: space-between; align-items: baseline; padding: var(--sp-3) var(--sp-4); border-bottom: 1px solid var(--line) }
+  .pane-h span { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-70) }
+  .pane-body { display: flex; flex-direction: column; gap: var(--sp-5); padding: var(--sp-6) var(--sp-4) var(--sp-4) }
+  .card { position: relative; background: var(--bg); border: 1px solid var(--line-2); border-radius: var(--r); padding: var(--sp-4) var(--sp-4) var(--sp-3) }
+  .card.dash { border-style: dashed; border-color: var(--ink-35) }
+  .kind { position: absolute; top: 0; left: var(--sp-3); transform: translateY(-50%); background: var(--ground-2); padding: 0 var(--sp-1); display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-70); line-height: 1; white-space: nowrap; max-width: calc(100% - 24px); overflow: hidden; text-overflow: ellipsis }
+  .kind svg { width: 10px; height: 12px; flex: none }
+  .kind .dot { color: var(--ink-35) }
+  .card-t { display: flex; gap: var(--sp-2); align-items: flex-start; font-weight: 600; font-size: 13px; line-height: 1.4; color: var(--ink) }
+  .card-t .cite { flex: none; margin-top: 1px }
+  .card-body { min-width: 0 }
+  .card-m { margin-top: 6px; font-family: var(--sans); font-weight: 400; font-size: 12px; line-height: 1.45; color: var(--ink-55) }
+  .card-note { margin-top: var(--sp-2); font-family: var(--sans); font-weight: 400; font-size: 11px; line-height: 1.4; color: var(--ink-55); font-style: italic }
+  .ast { color: var(--ink-55); margin-left: 1px }
+  .vswitch { display: inline-flex; gap: var(--sp-3); margin-bottom: var(--sp-6); font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase }
+  .vswitch a { color: var(--ink-55); text-decoration: none; border-bottom: 1px solid var(--line-2); padding-bottom: 2px }
+  .vswitch a[aria-current] { color: var(--ink); border-color: var(--ink) }
+
+
+  .anatomy { display: grid; gap: var(--sp-5) }
+  .anatomy div { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: var(--sp-3) }
+  .anatomy .n { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--accent-text); padding-top: 2px }
+  .anatomy h3 { font-family: var(--sans); font-weight: 600; font-size: 14px; margin: 0 0 var(--sp-1); color: var(--ink) }
+  .anatomy p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--ink-70) }
+
+  /* Open questions */
+  .qs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-4) }
+  @media (max-width: 760px) { .qs { grid-template-columns: 1fr } }
+  .q-card { border: 1px solid var(--line-2); border-radius: var(--r); padding: var(--sp-4) var(--sp-5) }
+  .q-card .owner { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-55) }
+  .q-card h3 { font-family: var(--sans); font-weight: 600; font-size: 15px; margin: var(--sp-2) 0 var(--sp-1) }
+  .q-card p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--ink-70) }
+
+  .foot { margin-top: 56px; color: var(--ink-55); font-size: 13px; line-height: 1.55; max-width: 720px }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-full" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M3.6 4.5h4.8M3.6 7h4.8M3.6 9.5h4.8"/></symbol>
+    <symbol id="i-abs" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M3.6 4.5h4.8"/></symbol>
+    <symbol id="i-data" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M4 10.2V8.6M6 10.2V6.6M8 10.2V4.4"/></symbol>
+    <symbol id="i-web" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="6" cy="7" r="5"/><ellipse cx="6" cy="7" rx="2.1" ry="5"/><path d="M1 7h10"/></symbol>
+    <symbol id="i-nf" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><rect x="1" y="1" width="10" height="12" rx="1.5" stroke-dasharray="2.2 1.6"/><path d="M4.6 5.4a1.45 1.45 0 1 1 2.1 1.3c-.45.25-.7.55-.7 1.1v.3"/><circle cx="6" cy="10" r=".35" fill="currentColor"/></symbol>
+  </defs>
+</svg>
+
+<main class="wrap">
+  <nav class="vswitch" aria-label="Versions"><a href="../">Version 1</a><a href="../v2/">Version 2</a><a href="../v3/">Version 3</a><a href="../v4/" aria-current="page">Version 4</a><a href="../compare/">Compare</a></nav>
+  <header>
+    <p class="eyebrow">Peace Intel · Evidence sidebar · Draft for review · Version 4 · 19 Nov 2026</p>
+    <h1>Evidence marks: showing how much of each source we actually read</h1>
+    <p class="lede">A proposed set of citation icons and sidebar cards, made in response to user testing. The aim is that a reader can tell, without stopping, whether a conclusion rests on a full paper, an abstract, a dataset or the open web.</p>
+    <blockquote class="finding">
+      <p>Testers could not tell whether conclusions came from full papers or truncated abstracts, whether old studies still apply, what "Treat with Caution" means, or whether "no research found" means none exists. Conclusions drawn from abstracts lower trust in the whole research.</p>
+      <cite>User testing workbook · PI-03</cite>
+    </blockquote>
+  </header>
+
+  <section aria-labelledby="set">
+    <h2 id="set">The set</h2>
+    <p class="why">Five icons replace today's filled, half-filled and arrow dots. Each is shown at 28px, at 12px for the sidebar and at 10px for running text.</p>
+    <div class="icons">
+      <div class="icon-tile"><span class="grp">Library</span><div class="sizes mk"><svg aria-hidden="true"><use href="#i-full"/></svg><svg aria-hidden="true"><use href="#i-full"/></svg><svg aria-hidden="true"><use href="#i-full"/></svg></div><b>Full text</b><p>We read the whole source. Also used for What Works records.</p></div>
+      <div class="icon-tile"><span class="grp">Library</span><div class="sizes mk"><svg aria-hidden="true"><use href="#i-abs"/></svg><svg aria-hidden="true"><use href="#i-abs"/></svg><svg aria-hidden="true"><use href="#i-abs"/></svg></div><b>Abstract only</b><p>We read the summary at the top, nothing more.</p></div>
+      <div class="icon-tile"><span class="grp">Library</span><div class="sizes mk"><svg aria-hidden="true"><use href="#i-data"/></svg><svg aria-hidden="true"><use href="#i-data"/></svg><svg aria-hidden="true"><use href="#i-data"/></svg></div><b>Dataset</b><p>Rows of data, counted rather than read.</p></div>
+      <div class="icon-tile"><span class="grp">Outside</span><div class="sizes mk q"><svg aria-hidden="true"><use href="#i-web"/></svg><svg aria-hidden="true"><use href="#i-web"/></svg><svg aria-hidden="true"><use href="#i-web"/></svg></div><b>External website</b><p>Found on the open web. Not reviewed.</p></div>
+      <div class="icon-tile"><span class="grp">Outside</span><div class="sizes mk q"><svg aria-hidden="true"><use href="#i-nf"/></svg><svg aria-hidden="true"><use href="#i-nf"/></svg><svg aria-hidden="true"><use href="#i-nf"/></svg></div><b>Not found</b><p>Cited, but we can't locate it to check.</p></div>
+    </div>
+    <div class="rule">
+      <p><b>Inside the library: a page</b>How much of the page is written on tells you how much we read. Three lines for full text, one line for an abstract. A dataset is a page of bars. Everything in the library takes the accent colour.</p>
+      <p><b>Outside the library: something else</b>A globe for the open web and a dashed page for a citation we couldn't find. Both are muted and dashed, the same way web sources are styled today.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="text">
+    <h2 id="text">In a sentence</h2>
+    <p class="why">The box stays, because the box is what says "open this evidence." The icon comes first, so a reader meets the kind of source before the number. The number is small and raised like a footnote, so it reads as a reference rather than a count.</p>
+    <div class="answer-frame">
+      <p class="label-sm">A chat answer</p>
+      <div class="answer">
+        <p>Reintegration programmes in Afghanistan stalled wherever security guarantees for former combatants were weak <span class="cite abs" role="link" tabindex="0" aria-label="Source 1, abstract only"><svg aria-hidden="true"><use href="#i-abs"/></svg><sup>1</sup></span>. Community-based reintegration held up better than cash-only packages <span class="cite lib" role="link" tabindex="0" aria-label="Source 2, full text"><svg aria-hidden="true"><use href="#i-full"/></svg><sup>2</sup></span>, and cash transfers alone are rated as having mixed effects across studies <span class="cite lib" role="link" tabindex="0" aria-label="Source 3, What Works intervention assessment"><svg aria-hidden="true"><use href="#i-full"/></svg><sup>3</sup></span>.</p>
+        <p>Sierra Leone's programme is the clearest success on record <span class="cite lib" role="link" tabindex="0" aria-label="Source 4, What Works evidence case"><svg aria-hidden="true"><use href="#i-full"/></svg><sup>4</sup></span>, with re-recruitment under 8% in districts that paired payments with local mediation <span class="cite lib" role="link" tabindex="0" aria-label="Source 5, dataset"><svg aria-hidden="true"><use href="#i-data"/></svg><sup>5</sup></span>. Recent field reporting suggests militias in Kunduz re-recruited many fighters <span class="cite q" role="link" tabindex="0" aria-label="Source 6, external website"><svg aria-hidden="true"><use href="#i-web"/></svg><sup>6</sup></span>, a pattern also described in an unpublished review <span class="cite q" role="link" tabindex="0" aria-label="Source 7, not found in the library"><svg aria-hidden="true"><use href="#i-nf"/></svg><sup>7</sup></span>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="sidebar">
+    <h2 id="sidebar">In the sidebar</h2>
+    <p class="why">The same seven sources, stacked as they would appear in the evidence pane at its real width.</p>
+    <div class="sidebar-layout">
+      <div class="pane" aria-label="Evidence pane mock-up">
+        <div class="pane-h"><span>Sources in this chat</span><span>07</span></div>
+        <div class="pane-body">
+          <article class="card"><span class="kind"><svg class="mk" aria-hidden="true"><use href="#i-abs"/></svg>Empirical study <span class="dot">·</span> Abstract only</span>
+            <div class="card-t"><span class="cite abs solo"><sup>1</sup></span><div class="card-body"><span>DDR in Afghanistan: When state building and insecurity collide<span class="ast">*</span></span><div class="card-m">2025 · German, read in English translation · *Conclusions from abstract only.</div></div></div>
+          </article>
+          <article class="card"><span class="kind"><svg class="mk" aria-hidden="true"><use href="#i-full"/></svg>Systematic review <span class="dot">·</span> Full text</span>
+            <div class="card-t"><span class="cite lib solo"><sup>2</sup></span><div class="card-body"><span>Community-based reintegration and the limits of cash transfers</span><div class="card-m">2019 · English</div></div></div>
+          </article>
+          <article class="card"><span class="kind"><svg class="mk" aria-hidden="true"><use href="#i-full"/></svg>What Works <span class="dot">·</span> Intervention assessment</span>
+            <div class="card-t"><span class="cite lib solo"><sup>3</sup></span><div class="card-body"><span>Cash transfers for former combatants</span><div class="card-m">Based on 14 studies · Updated 2026</div></div></div>
+          </article>
+          <article class="card"><span class="kind"><svg class="mk" aria-hidden="true"><use href="#i-full"/></svg>What Works <span class="dot">·</span> Evidence case</span>
+            <div class="card-t"><span class="cite lib solo"><sup>4</sup></span><div class="card-body"><span>Sierra Leone: reintegration through community mediation</span><div class="card-m">2002–2008 · Sierra Leone</div></div></div>
+          </article>
+          <article class="card"><span class="kind"><svg class="mk" aria-hidden="true"><use href="#i-data"/></svg>Dataset</span>
+            <div class="card-t"><span class="cite lib solo"><sup>5</sup></span><div class="card-body"><span>Reintegration programme outcomes by district</span><div class="card-m">1990–2020 · 1,240 rows</div></div></div>
+          </article>
+          <article class="card dash"><span class="kind"><svg class="mk q" aria-hidden="true"><use href="#i-web"/></svg>External website</span>
+            <div class="card-t"><span class="cite q solo"><sup>6</sup></span><div class="card-body"><span>Former fighters return to local militias in Kunduz<span class="ast">*</span></span><div class="card-m">2026 · English · afghanistan-analysts.org · *Open web source, not reviewed.</div></div></div>
+          </article>
+          <article class="card dash"><span class="kind"><svg class="mk q" aria-hidden="true"><use href="#i-nf"/></svg>Not found</span>
+            <div class="card-t"><span class="cite q solo"><sup>7</sup></span><div class="card-body"><span>"Unpublished review of DDR outcomes"<span class="ast">*</span></span><div class="card-m">As cited by the chat · *Not in the library. Verify before relying on it.</div></div></div>
+          </article>
+        </div>
+      </div>
+
+      <div class="anatomy">
+        <p class="label-sm">How a card reads, top to bottom</p>
+        <div><span class="n">01</span><div><h3>Kind, on the left of the top edge</h3><p>It moved from the right so the eye meets it before the title. It names the specific document type, such as "Empirical study" rather than "Paper", because a meta-analysis and a working paper carry different weight. How much we read follows after the dot.</p></div></div>
+        <div><span class="n">02</span><div><h3>Citation number, then title</h3><p>The same boxed number the reader clicked in the answer, so the link between sentence and source is obvious. The word "Cited" is gone: it made the number read like a count.</p></div></div>
+        <div><span class="n">03</span><div><h3>Year and language, right under the title</h3><p>Grey sans serif, so it reads as part of the title block rather than a separate label. Year first, so readers can judge whether an older study still applies, then the original language and whether we read a translation.</p></div></div>
+        <div><span class="n">04</span><div><h3>An asterisk when there is a caveat</h3><p>Abstracts, web pages and missing sources get an asterisk after the title, and the caveat follows the year and language on the same line. Full sources get neither, so the asterisk becomes the signal. This replaces "Treat with caution", which testers couldn't interpret.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="open">
+    <h2 id="open">Open questions</h2>
+    <p class="why">These need data or decisions before the design can be built as shown.</p>
+    <div class="qs">
+      <div class="q-card"><span class="owner">Needs engineering</span><h3>Do we know when something was translated?</h3><p>The library stores each paper's language, but nothing records whether Peace Intel read it in translation. "Read in EN translation" depends on that.</p></div>
+      <div class="q-card"><span class="owner">Needs engineering</span><h3>What do What Works records hold?</h3><p>The study count, period and country lines on those cards are placeholders. They need checking against the real records.</p></div>
+      <div class="q-card"><span class="owner">Design, next round</span><h3>Old studies</h3><p>Should a source past a certain age get its own caveat note, and what age? The year is visible, but testers asked whether old studies still apply.</p></div>
+      <div class="q-card"><span class="owner">Design and agent</span><h3>"No research found"</h3><p>This wording comes from the agent's answer, not the sidebar. It should say whether the library has nothing on the topic or the search found nothing, and suggest what to try next.</p></div>
+    </div>
+  </section>
+
+  <p class="foot">Every title, year, figure and website in the examples is a placeholder for layout. The colours and type follow Peace Intel's Rev 58 tokens.</p>
+</main>
+<script>
+  // ?pane shows only the sidebar mock-up, for the comparison page.
+  if (new URLSearchParams(location.search).has('pane')) {
+    const p = document.querySelector('.pane'); const m = document.querySelector('main');
+    m.replaceChildren(p); m.style.maxWidth = '360px'; document.body.style.padding = '12px';
+  }
+</script>
+</body>
+</html>

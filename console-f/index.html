@@ -100,9 +100,16 @@
   .card { position: relative; background: var(--bg); border: 1px solid var(--line-2); border-radius: var(--r); padding: var(--sp-5) var(--sp-4) var(--sp-3); cursor: pointer; transition: border-color .15s, box-shadow .15s }
   .card:hover { border-color: var(--ink-35) }
   .card.dash { border-style: dashed; border-color: var(--ink-35) }
-  /* The chosen card: its outline goes from 14% ink to 30%, lighter than the hover grey, and holds there under the pointer. A web card, already grey and dashed, turns solid. Its chip stays as it is. */
-  .card.active, .card.active:hover { border-color: color-mix(in srgb, var(--ink) 30%, transparent) }
-  .card.dash.active, .card.dash.active:hover { border-style: solid; border-color: var(--ink-35) }
+  /* THE CHOSEN CARD, three ways (switch "Chosen card"). Its chip never changes, and the outline holds under the pointer.
+     Grey: the outline goes from 14% ink to 30%.
+     Orange edge (default): the outline takes the accent at half strength, a step past the chip's own soft edge.
+     Orange tint: the chip's soft orange edge, and the card fills with a faint wash of the accent.
+     A web card stays grey in every version (its chip is grey): the dashes turn solid, and in the tint version it takes a grey wash. */
+  .card.active, .card.active:hover { border-color: color-mix(in srgb, var(--accent) 50%, transparent) }
+  body.pick-grey .card.active, body.pick-grey .card.active:hover { border-color: color-mix(in srgb, var(--ink) 30%, transparent) }
+  body.pick-tint .card.active, body.pick-tint .card.active:hover { border-color: color-mix(in srgb, var(--accent) 40%, transparent); background: color-mix(in srgb, var(--accent) 5%, var(--bg)) }
+  .card.dash.active, .card.dash.active:hover, body.pick-grey .card.dash.active, body.pick-tint .card.dash.active { border-style: solid; border-color: var(--ink-35) }
+  body.pick-tint .card.dash.active { background: color-mix(in srgb, var(--ink) 3%, var(--bg)) }
   .kind { position: absolute; top: 0; left: var(--sp-3); transform: translateY(-50%); background: var(--ground-2); padding: 0 var(--sp-1); display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-70); line-height: 1; white-space: nowrap; max-width: calc(100% - 24px) }
   .kind .cite { margin: 0; padding: 2px 5px; gap: 4px; vertical-align: 0; line-height: 1 }
   .kind .dot { color: var(--ink-35) }
@@ -126,17 +133,13 @@
 </svg>
 
 <div class="review">
-  <span>Citations · F in the text, cards as built</span>
+  <span>Citations · F in the text, roomy box, cards as built</span>
   <span class="grow"></span>
-  <span>Text box</span>
-  <span class="seg" role="group" aria-label="Space inside the box in the text" data-group="text">
-    <button type="button" data-mode="" aria-pressed="true">Roomy, like the card</button>
-    <button type="button" data-mode="tight" aria-pressed="false">Tight</button>
-  </span>
-  <span>Card chips</span>
-  <span class="seg" role="group" aria-label="Card chip style" data-group="card">
-    <button type="button" data-mode="" aria-pressed="true">Boxed, as built</button>
-    <button type="button" data-mode="cards-f" aria-pressed="false">No box, like the text</button>
+  <span>Chosen card</span>
+  <span class="seg" role="group" aria-label="How the chosen card is marked" data-group="pick">
+    <button type="button" data-mode="pick-grey" aria-pressed="false">Grey</button>
+    <button type="button" data-mode="" aria-pressed="true">Orange edge</button>
+    <button type="button" data-mode="pick-tint" aria-pressed="false">Orange tint</button>
   </span>
   <a href="../lighter/">Lighter chips</a>
   <a href="../hover/">Hover</a>
@@ -222,7 +225,9 @@
   });
   document.querySelectorAll('.card').forEach(c => c.addEventListener('click', () => activate(c.dataset.n)));
   // ?src=2 opens the page with source 2 chosen
-  const start = new URLSearchParams(location.search).get('src');
+  const q = new URLSearchParams(location.search);
+  const start = q.get('src');
+  const pick = q.get('pick'); if (pick) document.querySelector(`.seg button[data-mode="pick-${pick}"]`)?.click();
   if (start && document.querySelector(`.card[data-n="${start}"]`)) activate(start);
 </script>
 </body>

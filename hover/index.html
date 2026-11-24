@@ -34,7 +34,7 @@
 
   /* The chip exactly as built on matt/evidence-card-trust (components.css .cite, .cite .cn, .evi-ic): icon, then the raised number.
      In the alternatives it sits on the line of text (vertical-align 0) instead of 2px up. */
-  .cite { position: relative; display: inline-flex; align-items: center; gap: 3px; font-family: var(--mono); font-size: 12px; font-weight: 700; line-height: 1.5; padding: 1px 5px 1px 4px; margin: 0 2px; border: 1px solid; border-radius: 4px; white-space: nowrap; cursor: pointer; vertical-align: 0; transition: background var(--fast), border-color var(--fast), color var(--fast), box-shadow var(--fast) }
+  .cite { position: relative; display: inline-flex; align-items: center; gap: 3px; font-family: var(--mono); font-size: 12px; font-weight: 700; line-height: 1.5; padding: 3px 5px 3px 4px; margin: 0 2px; border: 1px solid; border-radius: 4px; white-space: nowrap; cursor: pointer; vertical-align: 0; transition: background var(--fast), border-color var(--fast), color var(--fast), box-shadow var(--fast) }
   .cite svg { display: inline-block; width: 10px; height: 12px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round }
   .cite sup { font-family: var(--mono); font-size: 11px; font-weight: 700; line-height: 1; vertical-align: 0; position: relative; top: -2px }
   .cite .peek { display: none }
@@ -44,7 +44,16 @@
   .claim { transition: background var(--fast); border-radius: 2px }
 
   /* Today: lifted 2px for the line, which draws in under the chip */
+  .v0 .cite, .pad1 .cite { padding-top: 1px; padding-bottom: 1px }
   .v0 .cite { vertical-align: 2px }
+  .pad2 .cite { padding-top: 2px; padding-bottom: 2px }
+  .pad3 .cite { padding-top: 3px; padding-bottom: 3px }
+  .pad4 .cite { padding-top: 4px; padding-bottom: 4px }
+  .sizes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; margin-bottom: 48px }
+  @media (max-width: 900px) { .sizes { grid-template-columns: 1fr 1fr } }
+  .sizes .opt { padding: 16px 18px 18px }
+  .sec { font-family: var(--serif); font-weight: 400; font-size: 22px; margin: 0 0 6px }
+  .sec + .lede { margin-bottom: 20px }
   .v0 .cite::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 1px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform var(--fast) }
   .v0 .cite:hover::after { transform: scaleX(1) }
   .v0 .cite:hover { box-shadow: 0 1px 1px rgba(20,19,16,.04), 0 2px 5px -3px rgba(20,19,16,.08) }
@@ -92,7 +101,17 @@
 <main class="wrap">
   <p class="eyebrow">Peace Intel · Citation hover · 24 Nov 2026</p>
   <h1>Six hover states for the citation chip</h1>
-  <p class="lede">Today the chip is lifted 2px above the text so a line can draw in underneath it on hover. All six alternatives sit the chip on the line of text and need no room below it. Hover the three chips in each paragraph: an abstract, a full text and a web source.</p>
+  <p class="lede">First, how tall the chip should be. Then six hover states, built with the taller chip. Today the chip is lifted 2px so a line can draw in underneath it on hover; the alternatives sit it on the line of text. Hover the three chips in each paragraph: an abstract, a full text and a web source.</p>
+  <h2 class="sec">Chip height</h2>
+  <p class="lede">Padding above and below the icon. The line of text is about 26px tall, so every size here fits without spreading the lines apart.</p>
+  <div class="sizes">
+    <section class="opt pad1"><h2>1px · today</h2><p class="why">16px tall. Tight above and below.</p></section>
+    <section class="opt pad2"><h2>2px</h2><p class="why">18px tall.</p></section>
+    <section class="opt pad3"><h2>3px · suggested</h2><p class="why">20px tall. Even space around the icon.</p></section>
+    <section class="opt pad4"><h2>4px</h2><p class="why">22px tall. Starts to crowd the lines above and below.</p></section>
+  </div>
+  <h2 class="sec">Hover, with the 3px chip</h2>
+  <p class="lede">Today's hover first, at today's size, then the six alternatives at 3px.</p>
   <div class="grid">
     <section class="opt ref v0"><h2>Today</h2><p class="why">A line draws in under the chip, with a faint shadow. The chip rides 2px high to make room for it.</p></section>
     <section class="opt v1"><h2>1 · Tint deepens</h2><p class="why">The chip's wash gets a little stronger. The quietest change, and the closest to how links behave elsewhere in the console.</p></section>

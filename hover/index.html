@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Citation Hover States</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FCFCFB; --ink: #141310; --ink-70: #4B463E; --ink-55: #706B63; --ink-35: #8C877F;
+    --line: rgba(20,19,16,.08); --line-2: rgba(20,19,16,.14); --wash-2: rgba(20,19,16,.06);
+    --accent: #D9481C; --accent-text: #C04019;
+    --hl: color-mix(in srgb, var(--accent) 14%, transparent);
+    --serif: "Source Serif 4", Georgia, serif; --sans: "Barlow", system-ui, sans-serif; --mono: "Space Mono", ui-monospace, monospace;
+    --fast: 120ms ease-out;
+  }
+  * { box-sizing: border-box }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); padding: 56px 24px 96px }
+  @media (max-width: 640px) { body { padding: 32px 16px 64px } }
+  .wrap { max-width: 1180px; margin: 0 auto }
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-55); margin: 0 0 12px }
+  h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(28px, 4vw, 40px); line-height: 1.15; margin: 0 0 12px }
+  .lede { color: var(--ink-70); font-size: 16px; line-height: 1.55; max-width: 720px; margin: 0 0 40px }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr } }
+  .opt { border: 1px solid var(--line-2); border-radius: 4px; padding: 20px 24px 24px }
+  .opt.ref { grid-column: 1 / -1; background: color-mix(in srgb, var(--ink) 3%, var(--bg)) }
+  .opt h2 { margin: 0 0 4px; font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-text) }
+  .opt .why { margin: 0 0 16px; font-size: 14px; line-height: 1.5; color: var(--ink-70) }
+  .answer { font-family: var(--serif); font-size: 16px; line-height: 1.65; color: var(--ink-70); margin: 0 }
+
+  /* The chip as built (Version 5, option 1) */
+  .cite { position: relative; display: inline-flex; align-items: center; gap: 3px; font-family: var(--mono); font-size: 11px; line-height: 1; padding: 2px 5px 2px 4px; margin: 0 1px; border: 1px solid; border-radius: 4px; white-space: nowrap; cursor: pointer; vertical-align: 1px; transition: background var(--fast), border-color var(--fast), color var(--fast), box-shadow var(--fast) }
+  .cite svg { width: 10px; height: 12px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.2; stroke-linecap: round }
+  .cite sup { font-size: 11px; font-weight: 700; line-height: 1; vertical-align: 0; position: relative; top: -2px }
+  .cite.t1 { color: var(--accent-text); border-color: color-mix(in srgb, var(--accent) 40%, transparent); background: color-mix(in srgb, var(--accent) 9%, transparent) }
+  .cite.t2 { color: var(--accent-text); border-color: color-mix(in srgb, var(--accent) 40%, transparent) }
+  .cite.t3 { color: var(--ink-55); border-color: var(--ink-35); border-style: dashed }
+  .claim { transition: background var(--fast); border-radius: 2px }
+
+  /* Today: lifted 2px for the line, which draws in under the chip */
+  .v0 .cite { vertical-align: 2px }
+  .v0 .cite::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 1px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform var(--fast) }
+  .v0 .cite:hover::after { transform: scaleX(1) }
+  .v0 .cite:hover { box-shadow: 0 1px 1px rgba(20,19,16,.04), 0 2px 5px -3px rgba(20,19,16,.08) }
+
+  /* 1 · Tint deepens */
+  .v1 .cite.t1:hover { background: color-mix(in srgb, var(--accent) 18%, transparent) }
+  .v1 .cite.t2:hover { background: color-mix(in srgb, var(--accent) 9%, transparent) }
+  .v1 .cite.t3:hover { background: var(--wash-2) }
+
+  /* 2 · Edge sharpens */
+  .v2 .cite.t1:hover, .v2 .cite.t2:hover { border-color: var(--accent-text) }
+  .v2 .cite.t3:hover { border-color: var(--ink-55); color: var(--ink-70) }
+
+  /* 3 · Fills with the accent */
+  .v3 .cite.t1:hover, .v3 .cite.t2:hover { background: var(--accent-text); border-color: var(--accent-text); color: var(--bg) }
+  .v3 .cite.t3:hover { background: var(--ink-55); border-color: var(--ink-55); border-style: solid; color: var(--bg) }
+
+  /* 4 · Lights the claim it supports */
+  .v4 .claim.lit { background: var(--hl) }
+  .v4 .cite:hover { border-color: var(--accent-text) }
+  .v4 .cite.t3:hover { border-color: var(--ink-55) }
+
+  /* 5 · Peek at the source */
+  .v5 .cite .peek { position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translate(-50%, 4px); width: 240px; padding: 10px 12px; background: var(--ink); color: var(--bg); border-radius: 4px; font-family: var(--sans); font-size: 12px; line-height: 1.4; white-space: normal; text-align: left; opacity: 0; pointer-events: none; transition: opacity var(--fast), transform var(--fast); z-index: 2 }
+  .v5 .cite .peek b { display: block; font-family: var(--mono); font-size: 10px; font-weight: 400; letter-spacing: .08em; text-transform: uppercase; color: color-mix(in srgb, var(--bg) 65%, transparent); margin-bottom: 3px }
+  .v5 .cite:hover .peek { opacity: 1; transform: translate(-50%, 0) }
+  .v5 .cite.t1:hover { background: color-mix(in srgb, var(--accent) 16%, transparent) }
+
+  /* 6 · The icon answers */
+  .v6 .cite svg .ln { transition: transform var(--fast); transform-origin: 3.6px 0; }
+  .v6 .cite:hover svg rect, .v6 .cite:hover svg circle { fill: color-mix(in srgb, currentColor 22%, transparent) }
+  .v6 .cite:hover svg .ln { transform: scaleX(.6) }
+  .v6 .cite:hover { border-color: var(--accent-text) }
+  .v6 .cite.t3:hover { border-color: var(--ink-55) }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-full" viewBox="0 0 12 14"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path class="ln" d="M3.6 4.5h4.8M3.6 7h4.8M3.6 9.5h4.8"/></symbol>
+    <symbol id="i-abs" viewBox="0 0 12 14"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path class="ln" d="M3.6 4.5h4.8"/></symbol>
+    <symbol id="i-web" viewBox="0 0 12 14"><circle cx="6" cy="7" r="5"/><ellipse cx="6" cy="7" rx="2.1" ry="5"/><path d="M1 7h10"/></symbol>
+  </defs>
+</svg>
+<main class="wrap">
+  <p class="eyebrow">Peace Intel · Citation hover · 24 Nov 2026</p>
+  <h1>Six hover states for the citation chip</h1>
+  <p class="lede">Today the chip is lifted 2px above the text so a line can draw in underneath it on hover. All six alternatives sit the chip on the line of text and need no room below it. Hover the three chips in each paragraph: an abstract, a full text and a web source.</p>
+  <div class="grid">
+    <section class="opt ref v0"><h2>Today</h2><p class="why">A line draws in under the chip, with a faint shadow. The chip rides 2px high to make room for it.</p></section>
+    <section class="opt v1"><h2>1 · Tint deepens</h2><p class="why">The chip's wash gets a little stronger. The quietest change, and the closest to how links behave elsewhere in the console.</p></section>
+    <section class="opt v2"><h2>2 · Edge sharpens</h2><p class="why">The border goes from a soft to a full accent line. Nothing moves or fills, so the reading stays still.</p></section>
+    <section class="opt v3"><h2>3 · Fills with the accent</h2><p class="why">The chip fills solid, a step before the dark "open" state. The clearest sign that it's clickable, and the loudest.</p></section>
+    <section class="opt v4"><h2>4 · Lights the claim</h2><p class="why">The sentence the chip supports gets a soft highlight, so you see exactly which words this source backs before you open it.</p></section>
+    <section class="opt v5"><h2>5 · Peek at the source</h2><p class="why">A small card shows the kind, title and year above the chip, so you can judge the source without opening the sidebar.</p></section>
+    <section class="opt v6"><h2>6 · The icon answers</h2><p class="why">The page inside the chip fills softly and its lines draw back, as if the page were turning. The edge sharpens with it.</p></section>
+  </div>
+</main>
+<script>
+  const chip = (cls, icon, n, kind, title) => `<span class="cite ${cls}" tabindex="0"><svg aria-hidden="true"><use href="#${icon}"/></svg><sup>${n}</sup><span class="peek"><b>${kind}</b>${title}</span></span>`;
+  const para = `<p class="answer"><span class="claim">Reintegration programmes in Afghanistan stalled wherever security guarantees for former combatants were weak</span>${chip('t2', 'i-abs', 1, 'Empirical study · Abstract only', 'DDR in Afghanistan: When state building and insecurity collide · 2025')}. <span class="claim">Community-based reintegration held up better than cash-only packages</span>${chip('t1', 'i-full', 2, 'Systematic review · Full text', 'Community-based reintegration and the limits of cash transfers · 2019')}, <span class="claim">although recent field reporting suggests militias re-recruited many of those fighters</span>${chip('t3', 'i-web', 3, 'External website', 'Former fighters return to local militias in Kunduz · afghanistan-analysts.org')}.</p>`;
+  document.querySelectorAll('.opt').forEach(o => o.insertAdjacentHTML('beforeend', para));
+  // Option 4: a chip lights the claim just before it.
+  document.querySelectorAll('.v4 .cite').forEach(c => {
+    const claim = c.previousElementSibling;
+    const on = v => claim && claim.classList.toggle('lit', v);
+    c.addEventListener('mouseenter', () => on(true)); c.addEventListener('mouseleave', () => on(false));
+    c.addEventListener('focus', () => on(true)); c.addEventListener('blur', () => on(false));
+  });
+</script>
+</body>
+</html>

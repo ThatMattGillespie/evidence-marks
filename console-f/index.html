@@ -69,16 +69,16 @@
   .cite.lib { color: var(--accent-text); border-color: color-mix(in srgb, var(--accent) 40%, transparent); background: color-mix(in srgb, var(--accent) 9%, transparent) }
   .cite.abs { color: var(--accent-text); border-color: color-mix(in srgb, var(--accent) 40%, transparent); background: transparent }
   .cite.q { color: var(--ink-55); border-color: var(--ink-35); border-style: dashed; background: transparent }
-  .cite.active { background: var(--ink); border-color: var(--ink); border-style: solid; color: var(--bg) }
   .cite:focus-visible { outline: none }
 
-  /* F · NO BOX, in the answer: the icon and the raised number, regular weight. The box appears on hover or focus
-     (the edge-sharpens hover), and the chosen source fills ink as before. */
+  /* F · NO BOX, in the answer: the icon and the raised number, regular weight. Pointing at a chip draws its edge in
+     full colour. The chosen source (its entry open on the right) wears the same box and colour as its card's chip:
+     the tint and soft edge for full text, the soft edge for an abstract, the grey dashes for the web. No ink fill. */
   .answer .cite { padding: 1px 3px 1px 2px; margin: 0 0 0 1px; vertical-align: 0 }
   .answer .cite .cn { font-weight: 400 }
   .answer .cite:not(.active) { background: transparent; border-color: transparent }
-  .answer .cite.lib:not(.active):is(:hover, :focus-visible), .answer .cite.abs:not(.active):is(:hover, :focus-visible) { border-color: var(--accent-text) }
-  .answer .cite.q:not(.active):is(:hover, :focus-visible) { border-color: var(--ink-55); color: var(--ink-70) }
+  .answer .cite.lib:is(:hover, :focus-visible), .answer .cite.abs:is(:hover, :focus-visible) { border-color: var(--accent-text) }
+  .answer .cite.q:is(:hover, :focus-visible) { border-color: var(--ink-55); color: var(--ink-70) }
 
   /* Evidence pane, as built */
   .pane { border-left: 1px solid var(--line); background: var(--ground-2); display: flex; flex-direction: column; min-height: 0 }
@@ -88,7 +88,8 @@
   .card { position: relative; background: var(--bg); border: 1px solid var(--line-2); border-radius: var(--r); padding: var(--sp-5) var(--sp-4) var(--sp-3); cursor: pointer; transition: border-color .15s, box-shadow .15s }
   .card:hover { border-color: var(--ink-35) }
   .card.dash { border-style: dashed; border-color: var(--ink-35) }
-  .card.active { border-color: var(--ink); border-style: solid; box-shadow: 0 0 0 1px var(--ink) }
+  /* The chosen card: only its outline darkens, one step past the hover. Its chip stays as it is. */
+  .card.active, .card.dash.active { border-color: var(--ink-55) }
   .kind { position: absolute; top: 0; left: var(--sp-3); transform: translateY(-50%); background: var(--ground-2); padding: 0 var(--sp-1); display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-70); line-height: 1; white-space: nowrap; max-width: calc(100% - 24px) }
   .kind .cite { margin: 0; padding: 2px 5px; gap: 4px; vertical-align: 0; line-height: 1 }
   .kind .dot { color: var(--ink-35) }
@@ -97,7 +98,7 @@
   .card-m { margin-top: 6px; font-size: 12px; line-height: 1.45; color: var(--ink-55) }
 
   /* Switch: the card chips lose their box too, to match the text */
-  body.cards-f .kind .cite:not(.active) { background: transparent; border-color: transparent; padding: 2px 2px }
+  body.cards-f .kind .cite { background: transparent; border-color: transparent; padding: 2px 2px }
   body.cards-f .kind .cite .cn { font-weight: 400 }
 </style>
 </head>
@@ -196,7 +197,6 @@
     document.querySelectorAll('.cite.active, .card.active').forEach(el => el.classList.remove('active'));
     document.querySelectorAll(`.answer .cite[data-n="${n}"], .card[data-n="${n}"]`).forEach(el => el.classList.add('active'));
     const card = document.querySelector(`.card[data-n="${n}"]`);
-    card.querySelector('.kind .cite').classList.add('active');
     card.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   }
   document.querySelectorAll('.answer .cite').forEach(c => {
@@ -204,6 +204,9 @@
     c.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(c.dataset.n); } });
   });
   document.querySelectorAll('.card').forEach(c => c.addEventListener('click', () => activate(c.dataset.n)));
+  // ?src=2 opens the page with source 2 chosen
+  const start = new URLSearchParams(location.search).get('src');
+  if (start && document.querySelector(`.card[data-n="${start}"]`)) activate(start);
 </script>
 </body>
 </html>

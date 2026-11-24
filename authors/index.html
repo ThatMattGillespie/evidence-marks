@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Cards With Authors</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* Values mirror src/styles/tokens.css (Rev 58). Light theme only. */
+  :root {
+    --bg: #FCFCFB; --ink: #141310; --ink-70: #4B463E; --ink-55: #706B63; --ink-35: #8C877F;
+    --line: rgba(20,19,16,.08); --line-2: rgba(20,19,16,.14);
+    --accent: #D9481C; --accent-text: #C04019;
+    --ground-2: color-mix(in srgb, var(--ink) 4%, var(--bg));
+    --serif: "Source Serif 4", Georgia, serif; --sans: "Barlow", system-ui, sans-serif; --mono: "Space Mono", ui-monospace, monospace;
+    --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 20px; --sp-6: 24px; --r: 4px;
+  }
+  * { box-sizing: border-box }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); padding: 56px 24px 96px }
+  @media (max-width: 640px) { body { padding: 32px 16px 64px } }
+  .wrap { max-width: 1560px; margin: 0 auto }
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-55); margin: 0 0 12px }
+  h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(28px, 4vw, 40px); line-height: 1.15; margin: 0 0 12px }
+  .lede { color: var(--ink-70); font-size: 16px; line-height: 1.55; max-width: 760px; margin: 0 0 40px }
+  .cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; align-items: start }
+  @media (max-width: 1280px) { .cols { grid-template-columns: repeat(2, minmax(0, 1fr)) } }
+  @media (max-width: 720px) { .cols { grid-template-columns: minmax(0, 1fr) } }
+  .col h2 { margin: 0 0 4px; font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-text) }
+  .col .why { margin: 0 0 14px; font-size: 14px; line-height: 1.5; color: var(--ink-70); min-height: 63px }
+  .col.ref h2 { color: var(--ink-55) }
+
+  /* The evidence pane, as built */
+  .pane { background: var(--ground-2); border: 1px solid var(--line); border-radius: var(--r); max-width: 380px }
+  .pane-h { display: flex; gap: var(--sp-2); padding: var(--sp-4) var(--sp-4) var(--sp-3); border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-70) }
+  .pane-body { display: flex; flex-direction: column; gap: var(--sp-5); padding: var(--sp-6) var(--sp-4) }
+  .card { position: relative; background: var(--bg); border: 1px solid var(--line-2); border-radius: var(--r); padding: var(--sp-5) var(--sp-4) var(--sp-3) }
+  .card.dash { border-style: dashed; border-color: var(--ink-35) }
+  .kind { position: absolute; top: 0; left: var(--sp-3); transform: translateY(-50%); background: var(--ground-2); padding: 0 var(--sp-1); display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-70); line-height: 1; white-space: nowrap; max-width: calc(100% - 24px); overflow: hidden; text-overflow: ellipsis }
+  .kind .dot { color: var(--ink-35) }
+  .cite { display: inline-flex; align-items: center; gap: 4px; flex: none; font-family: var(--mono); font-size: 11px; font-weight: 700; line-height: 1; padding: 2px 5px; border: 1px solid; border-radius: var(--r) }
+  .cite svg { width: 10px; height: 12px; flex: none }
+  .cite.lib { color: var(--accent-text); border-color: color-mix(in srgb, var(--accent) 40%, transparent); background: color-mix(in srgb, var(--accent) 9%, transparent) }
+  .cite.abs { color: var(--accent-text); border-color: color-mix(in srgb, var(--accent) 40%, transparent) }
+  .cite.q { color: var(--ink-55); border-color: var(--ink-35); border-style: dashed }
+  .card-t { font-weight: 600; font-size: 13px; line-height: 1.4; color: var(--ink); text-wrap: pretty }
+  .ast { color: var(--ink-55); font-weight: 400; margin-left: 1px }
+  .card-m { margin-top: 6px; font-size: 12px; line-height: 1.45; color: var(--ink-55) }
+  .card-m .au { color: var(--ink-70) }
+  .note { margin-top: 48px; max-width: 760px; font-size: 14px; line-height: 1.55; color: var(--ink-70) }
+  .note h2 { font-family: var(--serif); font-weight: 400; font-size: 22px; color: var(--ink); margin: 0 0 8px }
+  .note ul { padding-left: 18px; margin: 0 }
+  .note li + li { margin-top: 6px }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-full" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M3.6 4.5h4.8M3.6 7h4.8M3.6 9.5h4.8"/></symbol>
+    <symbol id="i-abs" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M3.6 4.5h4.8"/></symbol>
+    <symbol id="i-data" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M4 10.2V8.6M6 10.2V6.6M8 10.2V4.4"/></symbol>
+    <symbol id="i-web" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="6" cy="7" r="5"/><ellipse cx="6" cy="7" rx="2.1" ry="5"/><path d="M1 7h10"/></symbol>
+  </defs>
+</svg>
+<main class="wrap">
+  <p class="eyebrow">Peace Intel · Evidence cards with authors · 24 Nov 2026</p>
+  <h1>Authors after the year, without the language and abstract notes</h1>
+  <p class="lede">The card's top edge already says "Abstract only", so the grey line under the title drops the language and the "Conclusions from abstract only" note, and the title loses its asterisk. Authors take their place after the year. The library stores each author as a full name, and some authors are organisations, so the three versions differ only in how a long list is cut short.</p>
+  <div class="cols" id="cols"></div>
+  <section class="note">
+    <h2>Things to notice</h2>
+    <ul>
+      <li><b>Card 3</b> has seven authors: the full list wraps to two or three lines, which is where the short forms earn their place.</li>
+      <li><b>Card 4</b> is written by an organisation, so it reads the same in every version.</li>
+      <li><b>What Works cards</b> have no authors in the library, only a year, so they stay as they are.</li>
+      <li><b>The web card</b> keeps its address. Its "Open web source, not reviewed" note is dropped here too, since the dashed edge and "External website" carry it; it could stay if the team wants the warning spelled out.</li>
+      <li>A paper with no year still says <b>n.d.</b> so the author never looks like it's in the year's place.</li>
+    </ul>
+  </section>
+</main>
+<script>
+  const ICON = { lib: 'i-full', abs: 'i-abs', q: 'i-web', data: 'i-data' };
+  const S = [
+    { n: 1, c: 'abs', kind: 'Abstract only <span class="dot">·</span> Empirical study', t: 'DDR in Afghanistan: When state building and insecurity collide', y: '2025', a: ['Kristin Schmidt', 'Farid Ahmadi'], today: '2025 · Translated from German · *Conclusions from abstract only.', ast: 1 },
+    { n: 2, c: 'lib', kind: 'Full text <span class="dot">·</span> Systematic review', t: 'Community-based reintegration and the limits of cash transfers', y: '2019', a: ['Adaeze Okafor'], today: '2019' },
+    { n: 3, c: 'lib', kind: 'Full text <span class="dot">·</span> Randomised trial', t: 'Reintegrating and employing high-risk youth in Liberia: lessons from a randomised evaluation', y: '2016', a: ['Christopher Blattman', 'Jeannie Annan', 'Margaret Sheridan', 'Julian Jamison', 'Sebastian Chaskel', 'Kemi Ayodele', 'Thomas Fofanah'], today: '2016' },
+    { n: 4, c: 'abs', kind: 'Abstract only <span class="dot">·</span> Programme evaluation', t: 'Does youth employment build stability? Evidence from Somalia', y: '2015', a: ['Mercy Corps'], today: '2015 · *Conclusions from abstract only.', ast: 1 },
+    { n: 5, c: 'lib', kind: 'What Works <span class="dot">·</span> Intervention assessment', t: 'Cash transfers for former combatants', y: '2026', a: [], today: '2026' },
+    { n: 6, c: 'data', kind: 'Dataset', t: 'Reintegration programme outcomes by district', y: '', a: [], today: '' },
+    { n: 7, c: 'q', kind: 'External website', t: 'Former fighters return to local militias in Kunduz', host: 'afghanistan-analysts.org', a: [], today: 'afghanistan-analysts.org · *Open web source, not reviewed.', ast: 1 },
+    { n: 8, c: 'abs', kind: 'Abstract only <span class="dot">·</span> Working paper', t: 'Local mediation and the return of ex-combatants', y: '', a: ['Lucia Fernández', 'Tomás Rivera', 'Ana Duarte'], today: 'n.d. · *Conclusions from abstract only.', ast: 1 },
+  ];
+  const FMT = {
+    all: a => a.join(', '),
+    etal: a => a.length > 2 ? `${a[0]} et al.` : a.join(' and '),
+    more: a => a.length > 2 ? `${a.slice(0, 2).join(', ')} +${a.length - 2} more` : a.join(', '),
+  };
+  function meta(s, f) {
+    if (f === 'today') return s.today;
+    if (s.c === 'q') return s.host;
+    if (s.c === 'data') return '';
+    const isPaper = s.c === 'lib' || s.c === 'abs';
+    const y = s.y || (isPaper ? 'n.d.' : '');
+    const au = s.a.length ? `<span class="au">${FMT[f](s.a)}</span>` : '';
+    return [y, au].filter(Boolean).join(' · ');
+  }
+  function card(s, f) {
+    const m = meta(s, f);
+    const kind = s.kind;
+    return `<article class="card${s.c === 'q' ? ' dash' : ''}"><span class="kind"><span class="cite ${s.c === 'data' ? 'lib' : s.c}"><b>${s.n}</b><svg aria-hidden="true"><use href="#${ICON[s.c]}"/></svg></span>${kind}</span><div class="card-t">${s.t}${f === 'today' && s.ast ? '<span class="ast">*</span>' : ''}</div>${m ? `<div class="card-m">${m}</div>` : ''}</article>`;
+  }
+  const COLS = [
+    ['today', 'On the branch now', 'As on the branch now: language and the abstract note under the title, and an asterisk on the title.', 'ref'],
+    ['all', 'A · Every author', 'Every name, as stored. Complete, but a long list takes over the card.'],
+    ['etal', 'B · First author et al.', 'One name, "and" for two, "et al." for three or more. The usual short form in citations.'],
+    ['more', 'C · Two names, then a count', 'The first two names and how many more. Shows the size of the team without the whole list.'],
+  ];
+  document.getElementById('cols').innerHTML = COLS.map(([f, h, why, cls]) =>
+    `<section class="col ${cls || ''}"><h2>${h}</h2><p class="why">${why}</p><div class="pane"><div class="pane-h"><span>08</span><span>Sources cited</span></div><div class="pane-body">${S.map(s => card(s, f)).join('')}</div></div></section>`).join('');
+</script>
+</body>
+</html>

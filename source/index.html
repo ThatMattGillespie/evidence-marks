@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Source And Full Entry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* Values mirror src/styles/tokens.css and components.css (Rev 58 port). Light theme only. */
+  :root {
+    --bg: #FCFCFB; --ink: #141310; --ink-70: #4B463E; --ink-55: #706B63; --ink-35: #8C877F;
+    --line: rgba(20,19,16,.08); --line-2: rgba(20,19,16,.14);
+    --accent: #D9481C; --accent-text: #C04019;
+    --hl: color-mix(in srgb, var(--accent) 14%, transparent);
+    --ground-2: color-mix(in srgb, var(--ink) 4%, var(--bg));
+    --serif: "Source Serif 4", Georgia, serif; --sans: "Barlow", system-ui, sans-serif; --mono: "Space Mono", ui-monospace, monospace;
+    --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 20px; --sp-6: 24px; --sp-8: 32px; --r: 4px; --r-sm: 4px;
+    --t-h2: 30px; --t-h2-lh: 1.26; --t-h4: 19px; --t-h4-lh: 1.34; --t-body: 16px; --t-body-lh: 1.6; --t-ui: 13px; --t-sm: 12px;
+    --eb-3: 11px; --eb-3-ls: .10em; --eb-4: 10px; --eb-4-ls: .08em;
+  }
+  * { box-sizing: border-box }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); padding: 56px 24px 96px }
+  @media (max-width: 640px) { body { padding: 32px 16px 64px } }
+  p, h2, h3, h4, ul { margin: 0 }
+  .wrap { max-width: 1240px; margin: 0 auto }
+  .page-eb { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-55); margin: 0 0 12px }
+  h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(28px, 4vw, 40px); line-height: 1.15; margin: 0 0 12px }
+  .lede { color: var(--ink-70); font-size: 16px; line-height: 1.55; max-width: 780px; margin: 0 0 16px }
+  .row-h { font-family: var(--serif); font-weight: 400; font-size: 24px; margin: 48px 0 6px }
+  .row-why { color: var(--ink-70); font-size: 15px; line-height: 1.55; max-width: 780px; margin: 0 0 20px }
+  .row { display: grid; grid-template-columns: 380px minmax(0, 1fr); gap: 24px; align-items: start }
+  .row.three { grid-template-columns: repeat(2, 380px) }
+  @media (max-width: 1100px) { .row, .row.three { grid-template-columns: minmax(0, 1fr) } }
+  .cap { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-text); margin: 0 0 8px }
+  .cap.ref { color: var(--ink-55) }
+  .changes { margin-top: 12px; padding-left: 18px; font-size: 14px; line-height: 1.5; color: var(--ink-70); max-width: 640px }
+  .changes li + li { margin-top: 4px }
+
+  /* The pane */
+  .pane { background: var(--bg); border: 1px solid var(--line-2); border-radius: var(--r); overflow: hidden }
+  .pane-head { display: flex; align-items: center; gap: var(--sp-2); padding: var(--sp-4); border-bottom: 1px solid var(--line) }
+  .pane-head svg { width: 16px; height: 16px; fill: none; stroke: var(--ink-55); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round }
+  .pane-head .ph-t { font-family: var(--mono); font-size: var(--eb-3); letter-spacing: var(--eb-3-ls); text-transform: uppercase }
+  .pane-head .spacer { margin-left: auto }
+  .body { padding: var(--sp-5) var(--sp-5) var(--sp-8) }
+
+  /* Shared bits */
+  .eb { font-family: var(--mono); font-size: var(--eb-4); letter-spacing: var(--eb-4-ls); text-transform: uppercase; color: var(--ink-55); display: block; margin-bottom: var(--sp-3) }
+  .act { display: inline-flex; align-items: center; gap: var(--sp-1); font-family: var(--mono); font-size: var(--eb-3); letter-spacing: var(--eb-3-ls); text-transform: uppercase; color: var(--ink-55); border: 1px solid var(--line-2); border-radius: var(--r-sm); padding: var(--sp-2) var(--sp-3); background: none }
+  .act svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round }
+  .acts { display: flex; flex-wrap: wrap; gap: var(--sp-2); padding-bottom: var(--sp-5); border-bottom: 1px solid var(--line) }
+  .url { flex-basis: 100%; font-size: var(--t-sm); color: var(--ink-55) }
+  .url span { font-family: var(--mono); font-size: var(--eb-3); color: var(--ink-70) }
+  .sec { padding: var(--sp-5) 0; border-bottom: 1px solid var(--line) }
+  .sec:last-child { border-bottom: 0 }
+  .tags { display: flex; flex-wrap: wrap; gap: var(--sp-2) }
+  .tag { font-family: var(--mono); font-size: var(--eb-4); letter-spacing: var(--eb-4-ls); text-transform: uppercase; color: var(--ink-55); border: 1px solid var(--line-2); border-radius: var(--r-sm); padding: var(--sp-2) var(--sp-4) }
+  .orgs { padding-left: 18px; font-size: var(--t-ui); line-height: 1.6; color: var(--ink) }
+  .sum { font-family: var(--serif); font-size: var(--t-body); line-height: var(--t-body-lh); color: var(--ink) }
+  mark { background: var(--hl); color: inherit; padding: 1px 0; box-decoration-break: clone; -webkit-box-decoration-break: clone }
+  .ic { width: 10px; height: 12px; flex: none }
+
+  .cite { display: inline-flex; align-items: center; gap: 3px; flex: none; font-family: var(--mono); font-size: 11px; font-weight: 700; line-height: 1; padding: 2px 5px 2px 4px; border: 1px solid; border-radius: var(--r-sm); vertical-align: 1px }
+  .cite sup { font-size: 11px; vertical-align: 0; position: relative; top: -2px }
+  .cite.lib { color: var(--accent-text); border-color: color-mix(in srgb, var(--accent) 40%, transparent); background: color-mix(in srgb, var(--accent) 9%, transparent) }
+  .cite.abs { color: var(--accent-text); border-color: color-mix(in srgb, var(--accent) 40%, transparent) }
+  .cite.q { color: var(--ink-55); border-color: var(--ink-35); border-style: dashed }
+  .cite.nf { padding: 2px 5px; gap: 4px }
+
+  /* TODAY */
+  .old .h { display: flex; flex-direction: column; gap: var(--sp-2); padding-bottom: var(--sp-5) }
+  .old .t { font-family: var(--serif); font-weight: 400; font-size: var(--t-h4); line-height: var(--t-h4-lh) }
+  .old .m { font-family: var(--mono); font-size: var(--eb-3); letter-spacing: var(--eb-3-ls); color: var(--ink-55) }
+  .old .tier { display: inline-flex; align-items: center; gap: var(--sp-2); font-size: var(--t-sm); color: var(--ink-55) }
+  .old .tier .ic { color: var(--accent-text) }
+  .old .tier b { font-family: var(--mono); font-weight: 400; font-size: var(--eb-3); letter-spacing: var(--eb-3-ls); text-transform: uppercase; color: var(--ink) }
+  .old .n { font-size: var(--t-sm); color: var(--ink-55) }
+  .old .rh { display: flex; flex-direction: column; gap: var(--sp-3); padding-bottom: var(--sp-5); border-bottom: 1px solid var(--line) }
+  .old .rt { font-family: var(--serif); font-weight: 400; font-size: var(--t-h2); line-height: var(--t-h2-lh) }
+  .stats { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--sp-2) var(--sp-5); font-size: var(--t-sm); color: var(--ink-55) }
+  .stats b { font-family: var(--mono); font-weight: 400; color: var(--ink) }
+  .toc { display: flex; flex-wrap: wrap; gap: var(--sp-1) var(--sp-4); padding: var(--sp-4) 0; border-bottom: 1px solid var(--line); font-size: var(--t-sm); color: var(--ink-55) }
+  .rsec { border-bottom: 1px solid var(--line) }
+  .rsec .sh { display: flex; align-items: center; gap: var(--sp-3); padding: var(--sp-4) 0 }
+  .rsec .sh h3 { flex: 1; font-family: var(--serif); font-weight: 400; font-size: var(--t-h4); line-height: var(--t-h4-lh) }
+  .rsec .sh svg { width: 16px; height: 16px; fill: none; stroke: var(--ink-55); stroke-width: 1.5 }
+  .rsec.shut .sh svg { transform: rotate(-90deg) }
+  .rsec p { max-width: 640px; margin-bottom: var(--sp-4); font-family: var(--serif); font-size: var(--t-body); line-height: var(--t-body-lh) }
+  .hl-k { display: block; margin-bottom: var(--sp-1); font-size: var(--t-sm); color: var(--ink-55) }
+
+  /* PROPOSED: the card's top edge becomes the head's first line; the card's grey line, with every author, follows the title */
+  .new .h { display: flex; flex-direction: column; gap: var(--sp-2); padding-bottom: var(--sp-5) }
+  .legend { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: var(--eb-4); letter-spacing: var(--eb-4-ls); text-transform: uppercase; color: var(--ink-70); line-height: 1; margin-bottom: var(--sp-1) }
+  .legend .dot { color: var(--ink-35) }
+  .new .t { font-family: var(--serif); font-weight: 400; font-size: var(--t-h4); line-height: var(--t-h4-lh) }
+  .new .rt { font-family: var(--serif); font-weight: 400; font-size: var(--t-h2); line-height: var(--t-h2-lh) }
+  .new .m { font-size: var(--t-sm); line-height: 1.45; color: var(--ink-55) }
+  .new .m .au { color: var(--ink-70) }
+  .new .why { display: flex; gap: var(--sp-2); align-items: baseline; margin-top: var(--sp-2); padding: var(--sp-3); border-radius: var(--r-sm); background: var(--ground-2); font-size: var(--t-sm); line-height: 1.45; color: var(--ink-70) }
+  .new .rh { display: flex; flex-direction: column; gap: var(--sp-2); padding-bottom: var(--sp-5); border-bottom: 1px solid var(--line) }
+  .new .rh .stats { margin-top: var(--sp-2) }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-full" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M3.6 4.5h4.8M3.6 7h4.8M3.6 9.5h4.8"/></symbol>
+    <symbol id="i-abs" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M3.6 4.5h4.8"/></symbol>
+    <symbol id="i-web" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="6" cy="7" r="5"/><ellipse cx="6" cy="7" rx="2.1" ry="5"/><path d="M1 7h10"/></symbol>
+    <symbol id="g-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
+    <symbol id="g-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+    <symbol id="g-book" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></symbol>
+    <symbol id="g-out" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></symbol>
+    <symbol id="g-msg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="g-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+  </defs>
+</svg>
+
+<main class="wrap">
+  <p class="page-eb">Peace Intel · Source and full entry · 24 Nov 2026</p>
+  <h1>Source and full entry, in the evidence card's language</h1>
+  <p class="lede">The same paper, cited as source 2, as it opens today and as proposed. Nothing is removed: every field the two views show today is still there. The head borrows the card: its top edge becomes the first line, and its grey line (year, then authors) follows the title, here with every author.</p>
+
+  <h2 class="row-h">Today</h2>
+  <p class="row-why">The kind of paper sits in the mono byline, how much was read and which citation it is are two more lines, and the full entry repeats the depth as a badge.</p>
+  <div class="row">
+    <div>
+      <p class="cap ref">Source</p>
+      <div class="pane old">
+        <div class="pane-head"><svg><use href="#g-back"/></svg><span class="ph-t">Source</span><span class="spacer"></span><svg><use href="#g-x"/></svg></div>
+        <div class="body" id="old-source"></div>
+      </div>
+    </div>
+    <div>
+      <p class="cap ref">Full entry</p>
+      <div class="pane old">
+        <div class="pane-head"><svg><use href="#g-back"/></svg><span class="ph-t">Full entry</span><span class="spacer"></span><svg><use href="#g-x"/></svg></div>
+        <div class="body" id="old-entry"></div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="row-h">Proposed</h2>
+  <p class="row-why">One head for both views, read top to bottom the way the card reads: which citation and how much was read, what it is called, when and by whom. A short note then says what that depth means for this source, in words, where the card only has room for two.</p>
+  <div class="row">
+    <div>
+      <p class="cap">Source</p>
+      <div class="pane new">
+        <div class="pane-head"><svg><use href="#g-back"/></svg><span class="ph-t">Source</span><span class="spacer"></span><svg><use href="#g-x"/></svg></div>
+        <div class="body" id="new-source"></div>
+      </div>
+    </div>
+    <div>
+      <p class="cap">Full entry</p>
+      <div class="pane new">
+        <div class="pane-head"><svg><use href="#g-back"/></svg><span class="ph-t">Full entry</span><span class="spacer"></span><svg><use href="#g-x"/></svg></div>
+        <div class="body" id="new-entry"></div>
+      </div>
+    </div>
+  </div>
+  <ul class="changes">
+    <li><b>The card's top edge</b> (chip, then "Full text · Systematic review") replaces the depth line and the "Cited as 2 in this chat" line. A source has one number per chat, so the chip already says which citation it is.</li>
+    <li><b>The byline</b> moves under the title, in the card's grey sans: the year, then every author. The kind of paper leaves it, since the legend names it.</li>
+    <li><b>The depth note</b> spells out what the legend's two words mean for this source, in a quiet panel. It carries what the old depth line's gloss said.</li>
+    <li><b>The full entry</b> uses the same head with the larger title; its depth badge goes, and the sections and pages count stays.</li>
+    <li>Actions, the source address, Details, Keywords, Related organisations, the Abstract, the contents and the sections are unchanged.</li>
+  </ul>
+
+  <h2 class="row-h">Proposed, for the other kinds</h2>
+  <p class="row-why">The depth note matters most here. An abstract-only paper's actions still say "Read the abstract", and a web source has no full entry or record, so its note is the warning the old view gave in a paragraph.</p>
+  <div class="row three">
+    <div>
+      <p class="cap">Source · abstract only</p>
+      <div class="pane new">
+        <div class="pane-head"><svg><use href="#g-back"/></svg><span class="ph-t">Source</span><span class="spacer"></span><svg><use href="#g-x"/></svg></div>
+        <div class="body" id="new-abs"></div>
+      </div>
+    </div>
+    <div>
+      <p class="cap">Source · web</p>
+      <div class="pane new">
+        <div class="pane-head"><svg><use href="#g-back"/></svg><span class="ph-t">Source</span><span class="spacer"></span><svg><use href="#g-x"/></svg></div>
+        <div class="body" id="new-web"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  const P = {
+    title: 'Community-based reintegration and the limits of cash transfers',
+    year: '2019', type: 'Systematic review',
+    authors: ['Adaeze Okafor', 'Kwame Mensah', 'Jin Lee'],
+    details: ['Journal of Peace Research', 'Liberia', 'Sierra Leone', 'Systematic review', 'Disarmament and reintegration'],
+    keywords: ['reintegration', 'cash transfers', 'ex-combatants'],
+    orgs: ['United Nations Development Programme', 'World Bank'],
+    abstract: 'Across eleven programmes in West Africa, community-based reintegration outperformed cash-only packages on re-recruitment and local acceptance. Cash helped most where it was paired with mediation and a role in local decisions.',
+    url: 'doi.org/10.1177/0022343319',
+  };
+  const out = (t) => `<svg><use href="#g-out"/></svg>`;
+  const actions = (read) => `<div class="acts"><button class="act"><svg><use href="#g-book"/></svg>${read}</button><button class="act">Original source<svg><use href="#g-out"/></svg></button><p class="url">Original source opens <span>${P.url}</span></p><button class="act"><svg><use href="#g-msg"/></svg>Report a problem with this source</button></div>`;
+  const blocks = (abstractHl) => `
+    <section class="sec"><span class="eb">Details</span><div class="tags">${P.details.map(d => `<span class="tag">${d}</span>`).join('')}</div></section>
+    <section class="sec"><span class="eb">Keywords</span><div class="tags">${P.keywords.map(d => `<span class="tag">${d}</span>`).join('')}</div></section>
+    <section class="sec"><span class="eb">Related organizations</span><ul class="orgs">${P.orgs.map(o => `<li>${o}</li>`).join('')}</ul></section>
+    <section class="sec"><span class="eb">Abstract</span><p class="sum">${abstractHl ? `<mark>${P.abstract}</mark>` : P.abstract}</p></section>`;
+  const sections = `
+    <nav class="toc"><span>Introduction</span><span>Methods</span><span>Findings</span><span>Discussion</span><span>References</span></nav>
+    <div class="rsec"><div class="sh"><h3>1 Introduction</h3><svg><use href="#g-down"/></svg></div><p>Programmes that disarm and demobilise fighters are judged, in the end, by whether those fighters stay out of armed groups. This review gathers the evidence from eleven programmes in Liberia and Sierra Leone.</p></div>
+    <div class="rsec"><div class="sh"><h3>3 Findings</h3><svg><use href="#g-down"/></svg></div>
+      <span class="hl-k">Cited as <span class="cite lib"><svg class="ic"><use href="#i-full"/></svg><sup>2</sup></span> in this chat</span>
+      <p><mark>Community-based reintegration held up better than cash-only packages: re-recruitment was lower in every programme that gave former fighters a role in local decisions.</mark></p></div>
+    <div class="rsec shut"><div class="sh"><h3>References</h3><svg><use href="#g-down"/></svg></div></div>`;
+
+  // TODAY
+  document.getElementById('old-source').innerHTML = `
+    <header class="h">
+      <h3 class="t">${P.title}</h3>
+      <p class="m">${P.authors.join(', ')} · ${P.year} · ${P.type}</p>
+      <span class="tier"><svg class="ic"><use href="#i-full"/></svg><b>Full text</b> read in full on the platform</span>
+      <p class="n">Cited as <span class="cite lib"><svg class="ic"><use href="#i-full"/></svg><sup>2</sup></span> in this chat</p>
+    </header>${actions('Read the full entry')}${blocks(false)}`;
+  document.getElementById('old-entry').innerHTML = `
+    <div class="acts" style="border:0;padding-bottom:var(--sp-4)"><button class="act"><svg><use href="#g-msg"/></svg>Report a problem with this source</button></div>
+    <header class="rh">
+      <p class="m">${P.authors.join(', ')} · ${P.year}</p>
+      <h2 class="rt">${P.title}</h2>
+      <p class="stats"><span class="tier"><svg class="ic"><use href="#i-full"/></svg><b>Full text</b></span><span><b>07</b> sections</span><span><b>24</b> pages</span></p>
+    </header>${sections}`;
+
+  // PROPOSED
+  const legend = (cls, icon, n, words) => `<span class="legend"><span class="cite ${cls} nf"><b>${n}</b><svg class="ic"><use href="#${icon}"/></svg></span>${words}</span>`;
+  const meta = (y, a) => `<p class="m">${[y, a.length ? `<span class="au">${a.join(', ')}</span>` : ''].filter(Boolean).join(' · ')}</p>`;
+  document.getElementById('new-source').innerHTML = `
+    <header class="h">
+      ${legend('lib', 'i-full', 2, 'Full text <span class="dot">·</span> ' + P.type)}
+      <h3 class="t">${P.title}</h3>
+      ${meta(P.year, P.authors)}
+      <p class="why">Read in full on the platform. Every passage this chat cites can be opened in the paper's own text.</p>
+    </header>${actions('Read the full entry')}${blocks(false)}`;
+  document.getElementById('new-entry').innerHTML = `
+    <div class="acts" style="border:0;padding-bottom:var(--sp-4)"><button class="act"><svg><use href="#g-msg"/></svg>Report a problem with this source</button></div>
+    <header class="rh">
+      ${legend('lib', 'i-full', 2, 'Full text <span class="dot">·</span> ' + P.type)}
+      <h2 class="rt">${P.title}</h2>
+      ${meta(P.year, P.authors)}
+      <p class="stats"><span><b>07</b> sections</span><span><b>24</b> pages</span></p>
+    </header>${sections}`;
+  document.getElementById('new-abs').innerHTML = `
+    <header class="h">
+      ${legend('abs', 'i-abs', 1, 'Abstract only <span class="dot">·</span> Empirical study')}
+      <h3 class="t">DDR in Afghanistan: When state building and insecurity collide</h3>
+      ${meta('2025', ['Kristin Schmidt', 'Farid Ahmadi'])}
+      <p class="why">Conclusions come from the abstract only. The full text isn't in the library, so check the original before relying on the detail.</p>
+    </header>
+    <div class="acts"><button class="act"><svg><use href="#g-book"/></svg>Read the abstract</button><button class="act">Original source<svg><use href="#g-out"/></svg></button><p class="url">Original source opens <span>doi.org/10.1080/13533312</span></p><button class="act"><svg><use href="#g-msg"/></svg>Report a problem with this source</button></div>
+    <section class="sec"><span class="eb">Details</span><div class="tags"><span class="tag">Afghanistan</span><span class="tag">Empirical study</span><span class="tag">State building</span></div></section>
+    <section class="sec"><span class="eb">Abstract</span><p class="sum"><mark>Reintegration programmes stalled wherever security guarantees for former combatants were weak; many who disarmed without protection returned to armed groups within two years.</mark></p></section>`;
+  document.getElementById('new-web').innerHTML = `
+    <header class="h">
+      ${legend('q', 'i-web', 6, 'Open web source <span class="dot">·</span> Not reviewed')}
+      <h3 class="t">Former fighters return to local militias in Kunduz</h3>
+      <p class="m">afghanistan-analysts.org</p>
+      <p class="why">Peace Intel found this on the open web and hasn't ingested or vetted it. Open it off-platform and confirm before relying on it.</p>
+    </header>
+    <div class="acts" style="border:0"><button class="act">Original source<svg><use href="#g-out"/></svg></button><p class="url">Original source opens <span>afghanistan-analysts.org/x</span></p></div>`;
+</script>
+</body>
+</html>

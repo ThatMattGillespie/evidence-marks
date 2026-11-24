@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Lighter Citation Chips</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FCFCFB; --ink: #141310; --ink-70: #4B463E; --ink-55: #706B63; --ink-35: #8C877F;
+    --line: rgba(20,19,16,.08); --line-2: rgba(20,19,16,.14); --wash-1: rgba(20,19,16,.04); --wash-2: rgba(20,19,16,.06);
+    --accent: #D9481C; --accent-text: #C04019;
+    --serif: "Source Serif 4", Georgia, serif; --sans: "Barlow", system-ui, sans-serif; --mono: "Space Mono", ui-monospace, monospace;
+    --fast: 120ms ease-out;
+  }
+  * { box-sizing: border-box }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); padding: 56px 24px 96px }
+  @media (max-width: 640px) { body { padding: 32px 16px 64px } }
+  .wrap { max-width: 1180px; margin: 0 auto }
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-55); margin: 0 0 12px }
+  h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(28px, 4vw, 40px); line-height: 1.15; margin: 0 0 12px }
+  .lede { color: var(--ink-70); font-size: 16px; line-height: 1.55; max-width: 720px; margin: 0 0 40px }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr } }
+  .opt { border: 1px solid var(--line-2); border-radius: 4px; padding: 20px 24px 24px }
+  .opt.ref { grid-column: 1 / -1; background: color-mix(in srgb, var(--ink) 3%, var(--bg)) }
+  .opt h2 { margin: 0 0 4px; font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-text) }
+  .opt .why { margin: 0 0 6px; font-size: 14px; line-height: 1.5; color: var(--ink-70) }
+  .opt .spec { margin: 0 0 16px; font-family: var(--mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-55) }
+  .answer { font-family: var(--serif); font-size: 16px; line-height: 1.65; color: var(--ink-70); margin: 0 }
+  .answer + .answer { margin-top: 12px }
+
+  /* THE CHIP AS BUILT on matt/evidence-card-trust (24 Nov): 3px above and below, sits on the line,
+     full text filled, bold number. Hover: the edge sharpens. Every version below changes only what it says. */
+  .cite { position: relative; display: inline-flex; align-items: center; gap: 3px; font-family: var(--mono); font-size: 12px; font-weight: 700; line-height: 1.5; padding: 3px 5px 3px 4px; margin: 0 2px; border: 1px solid transparent; border-radius: 4px; white-space: nowrap; cursor: pointer; vertical-align: 0; transition: background var(--fast), border-color var(--fast), color var(--fast) }
+  .cite svg { display: inline-block; width: 10px; height: 12px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round }
+  .cite sup { font-family: var(--mono); font-size: 11px; font-weight: 700; line-height: 1; vertical-align: 0; position: relative; top: -2px }
+  .cite.t1 { color: var(--accent-text); border-color: color-mix(in srgb, var(--accent) 40%, transparent); background: color-mix(in srgb, var(--accent) 9%, transparent) }
+  .cite.t2 { color: var(--accent-text); border-color: color-mix(in srgb, var(--accent) 40%, transparent) }
+  .cite.t3 { color: var(--ink-55); border-color: var(--ink-35); border-style: dashed }
+  .cite.t1:is(:hover, :focus-visible), .cite.t2:is(:hover, :focus-visible) { border-color: var(--accent-text); outline: none }
+  .cite.t3:is(:hover, :focus-visible) { border-color: var(--ink-55); color: var(--ink-70); outline: none }
+
+  /* A · Slimmer: back to 1px above and below (16px tall) */
+  .vA .cite { padding-top: 1px; padding-bottom: 1px }
+
+  /* B · Outline only: no fill on any chip, regular-weight number, 1px */
+  .vB .cite { padding-top: 1px; padding-bottom: 1px }
+  .vB .cite.t1 { background: transparent }
+  .vB .cite sup { font-weight: 400 }
+
+  /* C · Grey at rest: the chip is ink until you point at it, then takes the accent */
+  .vC .cite { padding-top: 1px; padding-bottom: 1px }
+  .vC .cite sup { font-weight: 400 }
+  .vC .cite.t1, .vC .cite.t2 { color: var(--ink-55); border-color: var(--line-2); background: transparent }
+  .vC .cite.t1 { background: var(--wash-1) }
+  .vC .cite.t3 { color: var(--ink-35); border-color: var(--line-2) }
+  .vC .cite.t1:is(:hover, :focus-visible), .vC .cite.t2:is(:hover, :focus-visible) { color: var(--accent-text); border-color: var(--accent-text) }
+  .vC .cite.t3:is(:hover, :focus-visible) { color: var(--ink-70); border-color: var(--ink-55) }
+
+  /* D · Wash, no edge: a soft pill with no border; the edge appears on hover */
+  .vD .cite { padding-top: 1px; padding-bottom: 1px; border-color: transparent; border-style: solid }
+  .vD .cite sup { font-weight: 400 }
+  .vD .cite.t1 { background: color-mix(in srgb, var(--accent) 10%, transparent) }
+  .vD .cite.t2 { background: color-mix(in srgb, var(--accent) 5%, transparent) }
+  .vD .cite.t3 { background: var(--wash-2) }
+  .vD .cite.t3:is(:hover, :focus-visible) { border-style: dashed }
+
+  /* E · Footnote: smaller and raised, the way a footnote marker sits at the top of the letters */
+  .vE .cite { font-size: 10px; gap: 2px; padding: 0 3px 0 2px; margin: 0 1px; border-radius: 3px; vertical-align: 5px }
+  .vE .cite svg { width: 8px; height: 10px; stroke-width: 1.3 }
+  .vE .cite sup { font-size: 9px; font-weight: 400; top: -1px }
+  .vE .cite.t1 { background: transparent }
+
+  /* F · No box: the icon and number alone, like a footnote with a picture; the box appears on hover */
+  .vF .cite { padding: 1px 3px 1px 2px; margin: 0 0 0 1px; border-color: transparent; background: transparent }
+  .vF .cite.t1, .vF .cite.t2 { border-color: transparent; background: transparent }
+  .vF .cite.t3 { border-color: transparent }
+  .vF .cite sup { font-weight: 400 }
+  .vF .cite.t3:is(:hover, :focus-visible) { border-style: dashed }
+
+  .compare { margin-top: 48px }
+  .compare h2.sec { font-family: var(--serif); font-weight: 400; font-size: 22px; margin: 0 0 6px }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-full" viewBox="0 0 12 14"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M3.6 4.5h4.8M3.6 7h4.8M3.6 9.5h4.8"/></symbol>
+    <symbol id="i-abs" viewBox="0 0 12 14"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M3.6 4.5h4.8"/></symbol>
+    <symbol id="i-web" viewBox="0 0 12 14"><circle cx="6" cy="7" r="5"/><ellipse cx="6" cy="7" rx="2.1" ry="5"/><path d="M1 7h10"/></symbol>
+  </defs>
+</svg>
+<main class="wrap">
+  <p class="eyebrow">Peace Intel · Lighter citation chips · 24 Nov 2026</p>
+  <h1>Lighter ways to draw the citation chip</h1>
+  <p class="lede">The same two paragraphs in each box: an abstract, two full texts side by side, a web source and a two-digit number. Each version lightens the chip in one way, and they can be combined. Every one keeps the hover you chose: point at a chip and its edge sharpens.</p>
+  <div class="grid">
+    <section class="opt ref v0"><h2>Built now</h2><p class="why">3px above and below, full text filled, bold number.</p><p class="spec">20px tall · fill · bold</p></section>
+    <section class="opt vA"><h2>A · Slimmer</h2><p class="why">Only the height changes, back to 1px above and below. The box matches the height of the letters.</p><p class="spec">16px tall · fill · bold</p></section>
+    <section class="opt vB"><h2>B · Outline only</h2><p class="why">No fill on any chip and a regular-weight number. The icon alone tells full text from abstract.</p><p class="spec">16px tall · no fill · regular</p></section>
+    <section class="opt vC"><h2>C · Grey at rest</h2><p class="why">Chips are grey while you read and take the orange when you point at one. The paragraph reads as text first.</p><p class="spec">16px tall · grey · orange on hover</p></section>
+    <section class="opt vD"><h2>D · Wash, no edge</h2><p class="why">A soft tint with no border. Full text is a little stronger than abstract. The edge appears on hover.</p><p class="spec">16px tall · tint only · edge on hover</p></section>
+    <section class="opt vE"><h2>E · Footnote</h2><p class="why">Smaller and raised to the top of the letters, where a footnote marker sits. Lightest in the line, smallest to click.</p><p class="spec">12px tall · raised · outline</p></section>
+    <section class="opt vF"><h2>F · No box</h2><p class="why">Just the icon and number in the text. The box appears when you point at it.</p><p class="spec">no box at rest · box on hover</p></section>
+  </div>
+</main>
+<script>
+  const chip = (cls, icon, n) => `<span class="cite ${cls}" tabindex="0"><svg aria-hidden="true"><use href="#${icon}"/></svg><sup>${n}</sup></span>`;
+  const paras = `<p class="answer">Reintegration programmes in Afghanistan stalled wherever security guarantees for former combatants were weak${chip('t2', 'i-abs', 1)}. Community-based reintegration held up better than cash-only packages${chip('t1', 'i-full', 2)}${chip('t1', 'i-full', 4)}, although recent field reporting suggests militias re-recruited many of those fighters${chip('t3', 'i-web', 3)}.</p><p class="answer">Where payments were paired with local mediation, re-recruitment fell below eight percent within two years${chip('t1', 'i-full', 12)}, a result that held across provinces with very different levels of violence.</p>`;
+  document.querySelectorAll('.opt').forEach(o => o.insertAdjacentHTML('beforeend', paras));
+</script>
+</body>
+</html>

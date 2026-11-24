@@ -100,8 +100,8 @@
   .card { position: relative; background: var(--bg); border: 1px solid var(--line-2); border-radius: var(--r); padding: var(--sp-5) var(--sp-4) var(--sp-3); cursor: pointer; transition: border-color .15s, box-shadow .15s }
   .card:hover { border-color: var(--ink-35) }
   .card.dash { border-style: dashed; border-color: var(--ink-35) }
-  /* The chosen card: only its outline darkens, one step past the hover. Its chip stays as it is. */
-  .card.active, .card.dash.active { border-color: var(--ink-55) }
+  /* The chosen card: only its outline darkens, half a step past the hover (between ink-35 and ink-55). Its chip stays as it is. */
+  .card.active, .card.dash.active { border-color: color-mix(in srgb, var(--ink-55) 50%, var(--ink-35)) }
   .kind { position: absolute; top: 0; left: var(--sp-3); transform: translateY(-50%); background: var(--ground-2); padding: 0 var(--sp-1); display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-70); line-height: 1; white-space: nowrap; max-width: calc(100% - 24px) }
   .kind .cite { margin: 0; padding: 2px 5px; gap: 4px; vertical-align: 0; line-height: 1 }
   .kind .dot { color: var(--ink-35) }

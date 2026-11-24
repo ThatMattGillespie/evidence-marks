@@ -81,10 +81,10 @@
   .answer .cite.q:is(:hover, :focus-visible) { border-color: var(--ink-55); color: var(--ink-70) }
 
   /* ROOMY (the default): the box is drawn just outside the chip, with the card chip's space round the icon and
-     number (2px above and below, 4px each side, a pixel less than the card). The chip keeps its small size in the line, so the text never
+     number (the card chip's 2px above the number and below the icon, 5px each side). The chip keeps its small size in the line, so the text never
      moves when the box appears; a little extra space either side keeps the box off the next letter. */
-  body:not(.tight) .answer .cite { isolation: isolate; margin: 0 2px 0 4px; background: transparent !important; border-color: transparent !important }
-  body:not(.tight) .answer .cite::before { content: ""; position: absolute; inset: -1px -1px -1px -2px; z-index: -1; border: 1px solid transparent; border-radius: var(--r); transition: background var(--fast), border-color var(--fast) }
+  body:not(.tight) .answer .cite { isolation: isolate; margin: 0 3px 0 5px; background: transparent !important; border-color: transparent !important }
+  body:not(.tight) .answer .cite::before { content: ""; position: absolute; inset: -2.5px -2px -1px -3px; z-index: -1; border: 1px solid transparent; border-radius: var(--r); transition: background var(--fast), border-color var(--fast) }
   body:not(.tight) .answer .cite.lib.active::before { background: color-mix(in srgb, var(--accent) 9%, transparent); border-color: color-mix(in srgb, var(--accent) 40%, transparent) }
   body:not(.tight) .answer .cite.abs.active::before { border-color: color-mix(in srgb, var(--accent) 40%, transparent) }
   body:not(.tight) .answer .cite.q.active::before { border-color: var(--ink-35); border-style: dashed }

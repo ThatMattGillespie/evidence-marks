@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Chips And Punctuation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FCFCFB; --ink: #141310; --ink-70: #4B463E; --ink-55: #706B63; --ink-35: #8C877F; --line-2: rgba(20,19,16,.14);
+    --accent: #D9481C; --accent-text: #C04019;
+    --serif: "Source Serif 4", Georgia, serif; --sans: "Barlow", system-ui, sans-serif; --mono: "Space Mono", ui-monospace, monospace;
+    --fast: 120ms ease-out;
+  }
+  * { box-sizing: border-box }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); padding: 56px 24px 96px }
+  @media (max-width: 640px) { body { padding: 32px 16px 64px } }
+  .wrap { max-width: 1180px; margin: 0 auto }
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-55); margin: 0 0 12px }
+  h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(28px, 4vw, 40px); line-height: 1.15; margin: 0 0 12px }
+  .lede { color: var(--ink-70); font-size: 16px; line-height: 1.55; max-width: 760px; margin: 0 0 32px }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr } }
+  .opt { border: 1px solid var(--line-2); border-radius: 4px; padding: 20px 24px 24px }
+  .opt h2 { margin: 0 0 4px; font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-text) }
+  .opt .why { margin: 0 0 16px; font-size: 14px; line-height: 1.5; color: var(--ink-70) }
+  .answer { font-family: var(--serif); font-size: 16px; line-height: 1.65; color: var(--ink-70); margin: 0 }
+  .answer + .answer { margin-top: 12px }
+  .narrow { max-width: 300px; margin-top: 20px; padding-top: 16px; border-top: 1px dashed var(--line-2) }
+  .narrow::before { content: "Phone width"; display: block; font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-55); margin-bottom: 8px }
+  .nb { white-space: nowrap }
+
+  /* The chip as built: no box at rest, the roomy box on hover */
+  .cite { position: relative; isolation: isolate; display: inline-flex; align-items: center; gap: 3px; font-family: var(--mono); font-size: 12px; line-height: 1.5; padding: 1px 3px 1px 2px; margin: 0 3px 0 5px; border: 1px solid transparent; white-space: nowrap; cursor: pointer; vertical-align: 0 }
+  .cite svg { width: 10px; height: 12px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.2; stroke-linecap: round }
+  .cite sup { font-size: 11px; line-height: 1; vertical-align: 0; position: relative; top: -2px }
+  .cite.t1, .cite.t2 { color: var(--accent-text) } .cite.t3 { color: var(--ink-55) }
+  .cite::before { content: ""; position: absolute; inset: -2.5px -2px -1px -3px; z-index: -1; border: 1px solid transparent; border-radius: 4px; transition: border-color var(--fast) }
+  .cite:is(.t1, .t2):hover::before { border-color: var(--accent-text) }
+  .cite.t3:hover::before { border-color: var(--ink-55); border-style: dashed }
+  /* After punctuation, the chip sits a little closer to the mark it follows */
+  .after .cite { margin-left: 3px }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-full" viewBox="0 0 12 14"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M3.6 4.5h4.8M3.6 7h4.8M3.6 9.5h4.8"/></symbol>
+    <symbol id="i-abs" viewBox="0 0 12 14"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M3.6 4.5h4.8"/></symbol>
+    <symbol id="i-web" viewBox="0 0 12 14"><circle cx="6" cy="7" r="5"/><ellipse cx="6" cy="7" rx="2.1" ry="5"/><path d="M1 7h10"/></symbol>
+  </defs>
+</svg>
+<main class="wrap">
+  <p class="eyebrow">Peace Intel · Chips and punctuation · 24 Nov 2026</p>
+  <h1>Before or after the full stop?</h1>
+  <p class="lede">The same answer both ways, with the chip as built. Each chip stays on the line of the word before it in both. Point at a chip to see its box.</p>
+  <div class="grid">
+    <section class="opt before"><h2>Before the punctuation · today</h2><p class="why">The agent writes it this way: the chip sits against the last word, then the full stop or comma. The style of numbered references in science and engineering (IEEE, Vancouver).</p><div class="paras"></div><div class="narrow paras"></div></section>
+    <section class="opt after"><h2>After the punctuation</h2><p class="why">The sentence closes, then the chip: the style of footnote numbers (Chicago) and of Wikipedia. The words read through to the full stop without a break.</p><div class="paras"></div><div class="narrow paras"></div></section>
+  </div>
+</main>
+<script>
+  const chip = (cls, icon, n) => `<span class="cite ${cls}"><svg aria-hidden="true"><use href="#${icon}"/></svg><sup>${n}</sup></span>`;
+  const A = [
+    ['Reintegration programmes in Afghanistan stalled wherever security guarantees for former combatants were', 'weak', [['t2','i-abs',1]], '.'],
+    [' Community-based reintegration held up better than cash-only', 'packages', [['t1','i-full',2]], ','],
+    [' and cash transfers alone are rated as having mixed effects across', 'studies', [['t1','i-full',3],['t1','i-full',2]], '.'],
+    [' Recent field reporting suggests militias in Kunduz re-recruited many', 'fighters', [['t3','i-web',6]], '.'],
+  ];
+  function para(after) {
+    return '<p class="answer">' + A.map(([lead, word, chips, p]) => {
+      const cs = chips.map(c => chip(...c)).join('');
+      return `${lead} <span class="nb">${after ? word + p + cs : word + cs + p}</span>`;
+    }).join('') + '</p>';
+  }
+  document.querySelectorAll('.before .paras').forEach(d => d.innerHTML = para(false));
+  document.querySelectorAll('.after .paras').forEach(d => d.innerHTML = para(true));
+</script>
+</body>
+</html>

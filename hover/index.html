@@ -32,10 +32,12 @@
   .opt .why { margin: 0 0 16px; font-size: 14px; line-height: 1.5; color: var(--ink-70) }
   .answer { font-family: var(--serif); font-size: 16px; line-height: 1.65; color: var(--ink-70); margin: 0 }
 
-  /* The chip as built (Version 5, option 1) */
-  .cite { position: relative; display: inline-flex; align-items: center; gap: 3px; font-family: var(--mono); font-size: 11px; line-height: 1; padding: 2px 5px 2px 4px; margin: 0 1px; border: 1px solid; border-radius: 4px; white-space: nowrap; cursor: pointer; vertical-align: 1px; transition: background var(--fast), border-color var(--fast), color var(--fast), box-shadow var(--fast) }
-  .cite svg { width: 10px; height: 12px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.2; stroke-linecap: round }
-  .cite sup { font-size: 11px; font-weight: 700; line-height: 1; vertical-align: 0; position: relative; top: -2px }
+  /* The chip exactly as built on matt/evidence-card-trust (components.css .cite, .cite .cn, .evi-ic): icon, then the raised number.
+     In the alternatives it sits on the line of text (vertical-align 0) instead of 2px up. */
+  .cite { position: relative; display: inline-flex; align-items: center; gap: 3px; font-family: var(--mono); font-size: 12px; font-weight: 700; line-height: 1.5; padding: 1px 5px 1px 4px; margin: 0 2px; border: 1px solid; border-radius: 4px; white-space: nowrap; cursor: pointer; vertical-align: 0; transition: background var(--fast), border-color var(--fast), color var(--fast), box-shadow var(--fast) }
+  .cite svg { display: inline-block; width: 10px; height: 12px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round }
+  .cite sup { font-family: var(--mono); font-size: 11px; font-weight: 700; line-height: 1; vertical-align: 0; position: relative; top: -2px }
+  .cite .peek { display: none }
   .cite.t1 { color: var(--accent-text); border-color: color-mix(in srgb, var(--accent) 40%, transparent); background: color-mix(in srgb, var(--accent) 9%, transparent) }
   .cite.t2 { color: var(--accent-text); border-color: color-mix(in srgb, var(--accent) 40%, transparent) }
   .cite.t3 { color: var(--ink-55); border-color: var(--ink-35); border-style: dashed }
@@ -66,7 +68,7 @@
   .v4 .cite.t3:hover { border-color: var(--ink-55) }
 
   /* 5 · Peek at the source */
-  .v5 .cite .peek { position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translate(-50%, 4px); width: 240px; padding: 10px 12px; background: var(--ink); color: var(--bg); border-radius: 4px; font-family: var(--sans); font-size: 12px; line-height: 1.4; white-space: normal; text-align: left; opacity: 0; pointer-events: none; transition: opacity var(--fast), transform var(--fast); z-index: 2 }
+  .v5 .cite .peek { display: block; position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translate(-50%, 4px); width: 240px; padding: 10px 12px; background: var(--ink); color: var(--bg); border-radius: 4px; font-family: var(--sans); font-size: 12px; line-height: 1.4; white-space: normal; text-align: left; opacity: 0; pointer-events: none; transition: opacity var(--fast), transform var(--fast); z-index: 2 }
   .v5 .cite .peek b { display: block; font-family: var(--mono); font-size: 10px; font-weight: 400; letter-spacing: .08em; text-transform: uppercase; color: color-mix(in srgb, var(--bg) 65%, transparent); margin-bottom: 3px }
   .v5 .cite:hover .peek { opacity: 1; transform: translate(-50%, 0) }
   .v5 .cite.t1:hover { background: color-mix(in srgb, var(--accent) 16%, transparent) }

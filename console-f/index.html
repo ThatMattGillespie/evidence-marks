@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Unboxed Citations Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* Values mirror src/styles/tokens.css (Rev 58). Light theme only, as the brand specifies. */
+  :root {
+    --bg: #FCFCFB; --raised: #F3EFE7;
+    --ink: #141310; --ink-70: #4B463E; --ink-55: #706B63; --ink-35: #8C877F;
+    --line: rgba(20,19,16,.08); --line-2: rgba(20,19,16,.14); --wash-1: rgba(20,19,16,.03);
+    --accent: #D9481C; --accent-text: #C04019;
+    --ground-2: color-mix(in srgb, var(--ink) 4%, var(--bg));
+    --serif: "Source Serif 4", Georgia, serif; --sans: "Barlow", system-ui, sans-serif; --mono: "Space Mono", ui-monospace, monospace;
+    --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 20px; --sp-6: 24px; --sp-8: 32px; --r: 4px;
+    --fast: 120ms ease-out;
+  }
+  * { box-sizing: border-box }
+  html, body { height: 100% }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans) }
+
+  /* Review strip above the mock-up */
+  .review { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-3) var(--sp-6); padding: var(--sp-3) var(--sp-6); background: var(--ink); color: var(--bg); font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase }
+  .review a { color: color-mix(in srgb, var(--bg) 70%, transparent); text-decoration: none }
+  .review a:hover { color: var(--bg) }
+  .review .grow { flex: 1 }
+  .seg { display: inline-flex; border: 1px solid color-mix(in srgb, var(--bg) 35%, transparent); border-radius: var(--r); overflow: hidden }
+  .seg button { font: inherit; letter-spacing: inherit; text-transform: inherit; color: color-mix(in srgb, var(--bg) 70%, transparent); background: none; border: 0; padding: 6px 10px; cursor: pointer }
+  .seg button[aria-pressed="true"] { background: var(--bg); color: var(--ink) }
+
+  /* App shell */
+  .app { display: grid; grid-template-columns: 220px minmax(0, 1fr) 380px; height: calc(100vh - 41px); min-height: 640px }
+  @media (max-width: 1180px) { .app { grid-template-columns: minmax(0, 1fr) 380px } .rail { display: none } }
+  @media (max-width: 820px) { .app { grid-template-columns: minmax(0, 1fr); height: auto } }
+  .rail { border-right: 1px solid var(--line); padding: var(--sp-5) var(--sp-4); display: flex; flex-direction: column; gap: var(--sp-5) }
+  .brand { font-family: var(--serif); font-size: 19px }
+  .brand span { color: var(--accent) }
+  .new { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; border: 1px solid var(--line-2); border-radius: var(--r); padding: 8px 10px; color: var(--ink) }
+  .threads p { margin: 0 0 var(--sp-2); font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-55) }
+  .threads div { font-size: 13px; line-height: 1.35; padding: 7px 8px; border-radius: var(--r); color: var(--ink-70) }
+  .threads div.on { background: var(--ground-2); color: var(--ink) }
+
+  .chat { display: flex; flex-direction: column; min-width: 0; overflow: auto }
+  .thread { flex: 1; width: 100%; max-width: 720px; margin: 0 auto; padding: var(--sp-8) var(--sp-6) var(--sp-6) }
+  @media (max-width: 640px) { .thread { padding: var(--sp-6) var(--sp-4) } }
+  .who { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-55); margin: 0 0 var(--sp-2) }
+  .ask { background: var(--raised); border-radius: var(--r); padding: var(--sp-3) var(--sp-4); font-size: 15px; line-height: 1.5; color: var(--ink); margin: 0 0 var(--sp-8) }
+  .answer { font-family: var(--serif); font-size: 16px; line-height: 1.65; color: var(--ink-70) }
+  .answer p { margin: 0 0 var(--sp-4) }
+  .answer h3 { font-family: var(--serif); font-weight: 400; font-size: 19px; color: var(--ink); margin: var(--sp-6) 0 var(--sp-2) }
+  .foot { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-4); align-items: center; margin-top: var(--sp-6); padding-top: var(--sp-3); border-top: 1px solid var(--line); font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-55) }
+  .tally { display: inline-flex; gap: var(--sp-3); text-transform: none; letter-spacing: 0; font-family: var(--sans); font-size: 12px; color: var(--ink-70) }
+  .tally span { display: inline-flex; align-items: center; gap: 4px }
+  .tally svg { width: 10px; height: 12px; color: var(--accent-text) }
+  .tally .q svg { color: var(--ink-55) }
+  .composer { position: sticky; bottom: 0; background: var(--bg); border-top: 1px solid var(--line); padding: var(--sp-4) var(--sp-6) var(--sp-5) }
+  .composer div { max-width: 672px; margin: 0 auto; border: 1px solid var(--line-2); border-radius: var(--r); background: var(--bg); padding: var(--sp-3) var(--sp-4); font-size: 15px; color: var(--ink-55) }
+
+  /* Citation chip, shared base (as built on matt/evidence-card-trust) */
+  .cite { display: inline-flex; align-items: center; gap: 3px; font-family: var(--mono); font-size: 12px; font-weight: 700; line-height: 1.5; border: 1px solid transparent; border-radius: var(--r); white-space: nowrap; cursor: pointer; transition: background var(--fast), border-color var(--fast), color var(--fast) }
+  .cite svg { display: inline-block; width: 10px; height: 12px; flex: none }
+  .cite .cn { font-family: var(--mono); font-size: 11px; font-weight: 700; line-height: 1 }
+  .cite sup.cn { vertical-align: 0; position: relative; top: -2px }
+  .cite.lib { color: var(--accent-text); border-color: color-mix(in srgb, var(--accent) 40%, transparent); background: color-mix(in srgb, var(--accent) 9%, transparent) }
+  .cite.abs { color: var(--accent-text); border-color: color-mix(in srgb, var(--accent) 40%, transparent); background: transparent }
+  .cite.q { color: var(--ink-55); border-color: var(--ink-35); border-style: dashed; background: transparent }
+  .cite.active { background: var(--ink); border-color: var(--ink); border-style: solid; color: var(--bg) }
+  .cite:focus-visible { outline: none }
+
+  /* F · NO BOX, in the answer: the icon and the raised number, regular weight. The box appears on hover or focus
+     (the edge-sharpens hover), and the chosen source fills ink as before. */
+  .answer .cite { padding: 1px 3px 1px 2px; margin: 0 0 0 1px; vertical-align: 0 }
+  .answer .cite .cn { font-weight: 400 }
+  .answer .cite:not(.active) { background: transparent; border-color: transparent }
+  .answer .cite.lib:not(.active):is(:hover, :focus-visible), .answer .cite.abs:not(.active):is(:hover, :focus-visible) { border-color: var(--accent-text) }
+  .answer .cite.q:not(.active):is(:hover, :focus-visible) { border-color: var(--ink-55); color: var(--ink-70) }
+
+  /* Evidence pane, as built */
+  .pane { border-left: 1px solid var(--line); background: var(--ground-2); display: flex; flex-direction: column; min-height: 0 }
+  @media (max-width: 820px) { .pane { border-left: 0; border-top: 1px solid var(--line) } }
+  .pane-h { display: flex; gap: var(--sp-2); align-items: baseline; padding: var(--sp-4) var(--sp-4) var(--sp-3); border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-70) }
+  .pane-body { overflow: auto; display: flex; flex-direction: column; gap: var(--sp-5); padding: var(--sp-6) var(--sp-4) var(--sp-6) }
+  .card { position: relative; background: var(--bg); border: 1px solid var(--line-2); border-radius: var(--r); padding: var(--sp-5) var(--sp-4) var(--sp-3); cursor: pointer; transition: border-color .15s, box-shadow .15s }
+  .card:hover { border-color: var(--ink-35) }
+  .card.dash { border-style: dashed; border-color: var(--ink-35) }
+  .card.active { border-color: var(--ink); border-style: solid; box-shadow: 0 0 0 1px var(--ink) }
+  .kind { position: absolute; top: 0; left: var(--sp-3); transform: translateY(-50%); background: var(--ground-2); padding: 0 var(--sp-1); display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-70); line-height: 1; white-space: nowrap; max-width: calc(100% - 24px) }
+  .kind .cite { margin: 0; padding: 2px 5px; gap: 4px; vertical-align: 0; line-height: 1 }
+  .kind .dot { color: var(--ink-35) }
+  .card-t { font-weight: 600; font-size: 13px; line-height: 1.4; color: var(--ink) }
+  .ast { color: var(--ink-55); font-weight: 400; margin-left: 1px }
+  .card-m { margin-top: 6px; font-size: 12px; line-height: 1.45; color: var(--ink-55) }
+
+  /* Switch: the card chips lose their box too, to match the text */
+  body.cards-f .kind .cite:not(.active) { background: transparent; border-color: transparent; padding: 2px 2px }
+  body.cards-f .kind .cite .cn { font-weight: 400 }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-full" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M3.6 4.5h4.8M3.6 7h4.8M3.6 9.5h4.8"/></symbol>
+    <symbol id="i-abs" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M3.6 4.5h4.8"/></symbol>
+    <symbol id="i-data" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M4 10.2V8.6M6 10.2V6.6M8 10.2V4.4"/></symbol>
+    <symbol id="i-web" viewBox="0 0 12 14" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="6" cy="7" r="5"/><ellipse cx="6" cy="7" rx="2.1" ry="5"/><path d="M1 7h10"/></symbol>
+  </defs>
+</svg>
+
+<div class="review">
+  <span>Citations · F in the text, cards as built</span>
+  <span class="grow"></span>
+  <span>Card chips</span>
+  <span class="seg" role="group" aria-label="Card chip style">
+    <button type="button" data-mode="" aria-pressed="true">Boxed, as built</button>
+    <button type="button" data-mode="cards-f" aria-pressed="false">No box, like the text</button>
+  </span>
+  <a href="../lighter/">Lighter chips</a>
+  <a href="../hover/">Hover</a>
+</div>
+
+<div class="app">
+  <aside class="rail" aria-label="Conversations">
+    <div class="brand">Peace Intel<span>.</span></div>
+    <div class="new">+ New chat</div>
+    <div class="threads">
+      <p>Today</p>
+      <div class="on">DDR outcomes in Afghanistan</div>
+      <div>Mediation in the Sahel</div>
+      <p style="margin-top:16px">This week</p>
+      <div>Women's participation in ceasefires</div>
+      <div>Early warning indicators</div>
+    </div>
+  </aside>
+
+  <section class="chat" aria-label="Conversation">
+    <div class="thread">
+      <p class="who">You</p>
+      <div class="ask">What does the evidence say about reintegrating former combatants in Afghanistan, and what has worked elsewhere?</div>
+      <p class="who">Peace Intel</p>
+      <div class="answer">
+        <p>Reintegration programmes in Afghanistan stalled wherever security guarantees for former combatants were weak<span class="cite abs" data-n="1" tabindex="0" role="button" aria-label="Source 1, abstract only"><svg aria-hidden="true"><use href="#i-abs"/></svg><sup class="cn">1</sup></span>. Fighters who disarmed without protection were often targeted, and many returned to armed groups within two years.</p>
+        <p>Community-based reintegration held up better than cash-only packages<span class="cite lib" data-n="2" tabindex="0" role="button" aria-label="Source 2, full text"><svg aria-hidden="true"><use href="#i-full"/></svg><sup class="cn">2</sup></span>, and cash transfers alone are rated as having mixed effects across studies<span class="cite lib" data-n="3" tabindex="0" role="button" aria-label="Source 3, full text"><svg aria-hidden="true"><use href="#i-full"/></svg><sup class="cn">3</sup></span><span class="cite lib" data-n="2" tabindex="0" role="button" aria-label="Source 2, full text"><svg aria-hidden="true"><use href="#i-full"/></svg><sup class="cn">2</sup></span>.</p>
+        <h3>What has worked elsewhere</h3>
+        <p>Sierra Leone's programme is the clearest success on record<span class="cite lib" data-n="4" tabindex="0" role="button" aria-label="Source 4, full text"><svg aria-hidden="true"><use href="#i-full"/></svg><sup class="cn">4</sup></span>, with re-recruitment under 8% in districts that paired payments with local mediation<span class="cite lib" data-n="5" tabindex="0" role="button" aria-label="Source 5, dataset"><svg aria-hidden="true"><use href="#i-data"/></svg><sup class="cn">5</sup></span>.</p>
+        <p>The picture in Afghanistan may be changing. Recent field reporting suggests militias in Kunduz re-recruited many fighters<span class="cite q" data-n="6" tabindex="0" role="button" aria-label="Source 6, external website"><svg aria-hidden="true"><use href="#i-web"/></svg><sup class="cn">6</sup></span>, which is worth checking against the library before relying on it.</p>
+      </div>
+      <div class="foot"><span>Sources</span><span class="tally"><span><svg aria-hidden="true"><use href="#i-full"/></svg>3 full text</span><span><svg aria-hidden="true"><use href="#i-abs"/></svg>1 abstract</span><span><svg aria-hidden="true"><use href="#i-data"/></svg>1 dataset</span><span class="q"><svg aria-hidden="true"><use href="#i-web"/></svg>1 web</span></span><span>Give feedback</span></div>
+    </div>
+    <div class="composer"><div>Ask a follow-up…</div></div>
+  </section>
+
+  <aside class="pane" aria-label="Evidence pane">
+    <div class="pane-h"><span>06</span><span>Sources cited</span></div>
+    <div class="pane-body">
+      <article class="card" data-n="1"><span class="kind"><span class="cite abs"><b class="cn">1</b><svg aria-hidden="true"><use href="#i-abs"/></svg></span>Empirical study <span class="dot">·</span> Abstract only</span>
+        <div class="card-t">DDR in Afghanistan: When state building and insecurity collide<span class="ast">*</span></div>
+        <div class="card-m">2025 · Translated from German · *Conclusions from abstract only.</div>
+      </article>
+      <article class="card" data-n="2"><span class="kind"><span class="cite lib"><b class="cn">2</b><svg aria-hidden="true"><use href="#i-full"/></svg></span>Systematic review <span class="dot">·</span> Full text</span>
+        <div class="card-t">Community-based reintegration and the limits of cash transfers</div>
+        <div class="card-m">2019</div>
+      </article>
+      <article class="card" data-n="3"><span class="kind"><span class="cite lib"><b class="cn">3</b><svg aria-hidden="true"><use href="#i-full"/></svg></span>What Works <span class="dot">·</span> Intervention assessment</span>
+        <div class="card-t">Cash transfers for former combatants</div>
+        <div class="card-m">2026</div>
+      </article>
+      <article class="card" data-n="4"><span class="kind"><span class="cite lib"><b class="cn">4</b><svg aria-hidden="true"><use href="#i-full"/></svg></span>What Works <span class="dot">·</span> Evidence case</span>
+        <div class="card-t">Sierra Leone: reintegration through community mediation</div>
+        <div class="card-m">2008</div>
+      </article>
+      <article class="card" data-n="5"><span class="kind"><span class="cite lib"><b class="cn">5</b><svg aria-hidden="true"><use href="#i-data"/></svg></span>Dataset</span>
+        <div class="card-t">Reintegration programme outcomes by district</div>
+      </article>
+      <article class="card dash" data-n="6"><span class="kind"><span class="cite q"><b class="cn">6</b><svg aria-hidden="true"><use href="#i-web"/></svg></span>External website</span>
+        <div class="card-t">Former fighters return to local militias in Kunduz<span class="ast">*</span></div>
+        <div class="card-m">afghanistan-analysts.org · *Open web source, not reviewed.</div>
+      </article>
+    </div>
+  </aside>
+</div>
+
+<script>
+  // Card chip style switch
+  document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.seg button').forEach(x => x.setAttribute('aria-pressed', x === b));
+    document.body.classList.remove('cards-f');
+    if (b.dataset.mode) document.body.classList.add(b.dataset.mode);
+  }));
+  // Clicking a chip or a card marks that source chosen in both places
+  function activate(n) {
+    document.querySelectorAll('.cite.active, .card.active').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll(`.answer .cite[data-n="${n}"], .card[data-n="${n}"]`).forEach(el => el.classList.add('active'));
+    const card = document.querySelector(`.card[data-n="${n}"]`);
+    card.querySelector('.kind .cite').classList.add('active');
+    card.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+  document.querySelectorAll('.answer .cite').forEach(c => {
+    c.addEventListener('click', () => activate(c.dataset.n));
+    c.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(c.dataset.n); } });
+  });
+  document.querySelectorAll('.card').forEach(c => c.addEventListener('click', () => activate(c.dataset.n)));
+</script>
+</body>
+</html>

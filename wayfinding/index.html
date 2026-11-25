@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Source Wayfinding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FCFCFB; --ink: #141310; --ink-70: #4B463E; --ink-55: #706B63; --ink-35: #8C877F;
+    --line: rgba(20,19,16,.08); --line-2: rgba(20,19,16,.14);
+    --accent: #D9481C; --accent-text: #C04019;
+    --hl: color-mix(in srgb, var(--accent) 14%, transparent);
+    --ground-2: color-mix(in srgb, var(--ink) 4%, var(--bg));
+    --serif: "Source Serif 4", Georgia, serif; --sans: "Barlow", system-ui, sans-serif; --mono: "Space Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); padding: 56px 24px 96px }
+  @media (max-width: 640px) { body { padding: 32px 16px 64px } }
+  p, h3, h4 { margin: 0 }
+  .wrap { max-width: 1200px; margin: 0 auto }
+  .page-eb { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-55); margin: 0 0 12px }
+  h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(28px, 4vw, 40px); line-height: 1.15; margin: 0 0 12px }
+  .lede { color: var(--ink-70); font-size: 16px; line-height: 1.55; max-width: 800px; margin: 0 0 24px }
+  h2.sec { font-family: var(--serif); font-weight: 400; font-size: 26px; margin: 56px 0 6px }
+  .sec-why { color: var(--ink-70); font-size: 15px; line-height: 1.55; max-width: 800px; margin: 0 0 18px }
+  .pair { display: grid; grid-template-columns: 380px minmax(0, 1fr); gap: 24px; align-items: start }
+  @media (max-width: 1060px) { .pair { grid-template-columns: minmax(0, 1fr) } }
+  .cap { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-55); margin: 0 0 8px }
+
+  /* Flow */
+  .flow { display: flex; flex-wrap: wrap; align-items: stretch; gap: 0; margin: 8px 0 8px; font-size: 14px; color: var(--ink-70) }
+  .lvl { border: 1px solid var(--line-2); border-radius: 4px; padding: 12px 14px; background: var(--ground-2); min-width: 190px }
+  .lvl b { display: block; font-family: var(--mono); font-weight: 400; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); margin-bottom: 4px }
+  .arr { display: grid; place-items: center; padding: 0 10px; color: var(--ink-35); font-family: var(--mono) }
+  .entry-pts { font-size: 14px; line-height: 1.6; color: var(--ink-70); max-width: 800px; margin: 12px 0 0; padding-left: 18px }
+
+  /* Pane */
+  .pane { background: var(--ground-2); border: 1px solid var(--line-2); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; height: 540px }
+  .ph { display: flex; align-items: center; gap: 8px; padding: 0 16px; border-bottom: 1px solid var(--line); height: 57px; flex: none }
+  .ph svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex: none }
+  .ib { display: inline-grid; place-items: center; width: 24px; height: 24px; color: var(--ink-55) }
+  .t { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); white-space: nowrap }
+  .spacer { margin-left: auto }
+  .crumb { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); min-width: 0; white-space: nowrap }
+  .crumb a { color: var(--ink-55); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px }
+  .crumb .sep { color: var(--ink-35) }
+  .alllink { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-55); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; white-space: nowrap }
+  .stepper { display: inline-flex; align-items: center; font-family: var(--mono); font-size: 11px; color: var(--ink-55); white-space: nowrap }
+  .stepper b { font-weight: 400; color: var(--ink); padding: 0 2px }
+  .strip { display: flex; gap: 6px; padding: 9px 16px; border-bottom: 1px solid var(--line); align-items: center; flex: none }
+  .strip .cite { opacity: .7 }
+  .strip .cite.on { opacity: 1; border-color: var(--accent-text); box-shadow: 0 0 0 1px var(--accent-text) }
+  .strip .alllink { margin-left: auto }
+  .sticky { display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-bottom: 1px solid var(--line); background: var(--bg); flex: none; font-size: 13px; font-weight: 600; min-width: 0 }
+  .sticky .tt { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+  .sticky .toc { margin-left: auto; font-family: var(--mono); font-weight: 400; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-55); white-space: nowrap }
+  .body { padding: 20px; flex: 1; overflow: hidden; display: flex; flex-direction: column; gap: 8px }
+  .lg { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-70); line-height: 1; margin-bottom: 4px }
+  .lg .dot { color: var(--ink-35) }
+  .cite { display: inline-flex; align-items: center; gap: 4px; font-family: var(--mono); font-size: 11px; font-weight: 700; line-height: 1; padding: 2px 5px; border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: 4px; color: var(--accent-text); flex: none }
+  .cite.lib { background: color-mix(in srgb, var(--accent) 9%, transparent) }
+  .cite.q { color: var(--ink-55); border-color: var(--ink-35); border-style: dashed }
+  .cite svg { width: 10px; height: 12px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.2; stroke-linecap: round }
+  .st { font-family: var(--serif); font-weight: 400; font-size: 19px; line-height: 1.34 }
+  .rt { font-family: var(--serif); font-weight: 400; font-size: 26px; line-height: 1.26 }
+  .by { font-size: 12px; line-height: 1.45; color: var(--ink-55) }
+  .acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding-bottom: 20px; border-bottom: 1px solid var(--line) }
+  .act { display: inline-flex; align-items: center; gap: 4px; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-55); border: 1px solid var(--line-2); border-radius: 4px; padding: 8px 12px }
+  .eb { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-55); margin-top: 16px }
+  .sum { font-family: var(--serif); font-size: 16px; line-height: 1.6 }
+  .secth { font-family: var(--serif); font-size: 19px; padding: 14px 0 6px; border-top: 1px solid var(--line); margin-top: 6px }
+  .hlk { font-size: 12px; color: var(--ink-55) }
+  .hlk .cite { padding: 1px 4px; margin: 0 2px }
+  mark { background: var(--hl); color: inherit }
+  .faded { color: var(--ink-55) }
+  .notes { margin-top: 56px; max-width: 800px; font-size: 15px; line-height: 1.55; color: var(--ink-70) }
+  .notes h2 { font-family: var(--serif); font-weight: 400; font-size: 24px; color: var(--ink); margin: 0 0 8px }
+  .notes ul { padding-left: 18px; margin: 0 }
+  .notes li + li { margin-top: 6px }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-full" viewBox="0 0 12 14"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M3.6 4.5h4.8M3.6 7h4.8M3.6 9.5h4.8"/></symbol>
+    <symbol id="i-abs" viewBox="0 0 12 14"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M3.6 4.5h4.8"/></symbol>
+    <symbol id="i-data" viewBox="0 0 12 14"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M4 10.2V8.6M6 10.2V6.6M8 10.2V4.4"/></symbol>
+    <symbol id="i-web" viewBox="0 0 12 14"><circle cx="6" cy="7" r="5"/><ellipse cx="6" cy="7" rx="2.1" ry="5"/><path d="M1 7h10"/></symbol>
+    <symbol id="g-back" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></symbol>
+    <symbol id="g-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+    <symbol id="g-l" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
+    <symbol id="g-r" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></symbol>
+  </defs>
+</svg>
+<main class="wrap">
+  <p class="page-eb">Peace Intel · Source wayfinding · 25 Nov 2026</p>
+  <h1>Sources cited, Source and Full entry as one system</h1>
+  <p class="lede">The pane has three levels. A chip lands on whichever level fits the source, so the way around has to work from either landing place, and above all from the Full entry, where most full-text citations open, deep in the paper.</p>
+  <div class="flow">
+    <div class="lvl"><b>Sources cited</b>The list of cards</div><div class="arr">→</div>
+    <div class="lvl"><b>Source</b>One source: head, actions, abstract</div><div class="arr">→</div>
+    <div class="lvl"><b>Full entry</b>The paper, scrolled to the cited section</div>
+  </div>
+  <ul class="entry-pts">
+    <li>A <b>full text</b> chip lands on the <b>Full entry</b>, at its highlighted section (Source is skipped).</li>
+    <li>An <b>abstract-only or web</b> chip, or a card in the list, lands on the <b>Source</b>.</li>
+    <li>Today the arrow in each head goes up one level without saying where: from the Full entry, two clicks to reach the list.</li>
+  </ul>
+  <div id="systems"></div>
+  <section class="notes">
+    <h2>Reading the three</h2>
+    <ul>
+      <li><b>1 · Breadcrumb</b> is the most literal answer: every level one click away from any other, and it says where you are. The Full entry's wide pane has room for all three steps.</li>
+      <li><b>2 · Up, and All</b> keeps today's arrow (one level up, now named) and adds one fixed "All 6 sources" link in the same spot in every view. Quieter, and the shortest change to explain.</li>
+      <li><b>3 · Step through</b> adds a way across: the next cited source opens where its chip would (a full text at its passage). It suits a reader checking claim after claim, which is your question for Ahn.</li>
+      <li>In every version, the Full entry's head stays in view while the paper scrolls, carrying the chip and short title, so a reader who lands mid-paper knows which source this is. On a phone that bar exists already; this gives it to the desk too.</li>
+      <li>1 or 2 can ship in this PR. 3 is a behaviour change and fits a follow-up, after Ahn's answer.</li>
+    </ul>
+  </section>
+</main>
+<script>
+  const back = '<span class="ib"><svg><use href="#g-back"/></svg></span>';
+  const x = '<span class="ib"><svg><use href="#g-x"/></svg></span>';
+  const chip2 = '<span class="cite lib"><b>2</b><svg><use href="#i-full"/></svg></span>';
+  const source = `<div class="body">
+      <span class="lg">${chip2}Full text <span class="dot">·</span> Systematic review</span>
+      <h3 class="st">Community-based reintegration and the limits of cash transfers</h3>
+      <p class="by">2019 · Adaeze Okafor, Kwame Mensah, Jin Lee</p>
+      <div class="acts"><span class="act">Read the full entry</span><span class="act">Original source ↗</span></div>
+      <p class="eb">Abstract</p>
+      <p class="sum">Across eleven programmes in West Africa, community-based reintegration outperformed cash-only packages on re-recruitment.</p>
+    </div>`;
+  // The full entry as a chip lands on it: scrolled to the cited section, the head kept in view
+  const entry = `<div class="sticky">${chip2}<span class="tt">Community-based reintegration and the limits of cash transfers</span><span class="toc">Contents ▾</span></div>
+    <div class="body">
+      <p class="sum faded">…demobilise fighters are judged, in the end, by whether those fighters stay out of armed groups. This review gathers the evidence from eleven programmes.</p>
+      <h4 class="secth">3 Findings</h4>
+      <p class="hlk">Cited as <span class="cite lib"><svg><use href="#i-full"/></svg><b>2</b></span> in this chat</p>
+      <p class="sum"><mark>Community-based reintegration held up better than cash-only packages: re-recruitment was lower in every programme that gave former fighters a role in local decisions.</mark></p>
+      <p class="sum">Where cash was paired with mediation, the effect held across provinces with very different levels of violence.</p>
+    </div>`;
+  const chips = [['abs','i-abs',1],['lib','i-full',2],['lib','i-full',3],['lib','i-data',4],['q','i-web',5],['abs','i-abs',6]];
+  const strip = `<div class="strip">${chips.map(([c,i,n]) => `<span class="cite ${c}${n===2?' on':''}"><b>${n}</b><svg><use href="#${i}"/></svg></span>`).join('')}<a class="alllink" href="#">All</a></div>`;
+  const S = [
+    ['Today', 'Each view has an unlabelled arrow that goes up one level. From the Full entry it goes to Source, then the list.',
+      `<div class="ph">${back}<span class="t">Source</span><span class="spacer"></span>${x}</div>${source}`,
+      `<div class="ph">${back}<span class="t">Full entry</span><span class="spacer"></span>${x}</div><div class="body" style="gap:8px"><p class="sum faded">…opens here, scrolled to the section, with the title and the head out of sight above.</p><h4 class="secth">3 Findings</h4><p class="hlk">Cited as <span class="cite lib"><svg><use href="#i-full"/></svg><b>2</b></span> in this chat</p><p class="sum"><mark>Community-based reintegration held up better than cash-only packages: re-recruitment was lower in every programme that gave former fighters a role in local decisions.</mark></p></div>`],
+    ['1 · Breadcrumb', 'The head says where you are and every step is a link: "Sources cited / Source 2" and "Sources cited / Source 2 / Full entry". A full-text chip lands on the third step, and one click reaches the list.',
+      `<div class="ph"><span class="crumb"><a href="#">Sources cited</a><span class="sep">/</span><span>Source 2</span></span><span class="spacer"></span>${x}</div>${source}`,
+      `<div class="ph"><span class="crumb"><a href="#">Sources cited</a><span class="sep">/</span><a href="#">Source 2</a><span class="sep">/</span><span>Full entry</span></span><span class="spacer"></span>${x}</div>${entry}`],
+    ['2 · Up, and All', 'The arrow keeps going up one level and now names it ("← Source"). One link, "All 6 sources", sits in the same place in every view, so the list is always one click away.',
+      `<div class="ph">${back}<span class="t">Source</span><span class="spacer"></span><a class="alllink" href="#">All 6 sources</a>${x}</div>${source}`,
+      `<div class="ph"><span class="ib"><svg><use href="#g-back"/></svg></span><span class="t">Source</span><span class="spacer"></span><a class="alllink" href="#">All 6 sources</a>${x}</div>${entry}`],
+    ['3 · Step through', 'The breadcrumb, plus "2 of 6" with arrows to the previous and next cited source. Each opens where its chip would: source 3, a full text, opens at its passage; an abstract opens its Source.',
+      `<div class="ph"><span class="crumb"><a href="#">Sources cited</a><span class="sep">/</span><span>Source</span></span><span class="spacer"></span><span class="stepper"><span class="ib"><svg><use href="#g-l"/></svg></span><b>2 of 6</b><span class="ib"><svg><use href="#g-r"/></svg></span></span>${x}</div>${source}`,
+      `<div class="ph"><span class="crumb"><a href="#">Sources cited</a><span class="sep">/</span><a href="#">Source</a><span class="sep">/</span><span>Full entry</span></span><span class="spacer"></span><span class="stepper"><span class="ib"><svg><use href="#g-l"/></svg></span><b>2 of 6</b><span class="ib"><svg><use href="#g-r"/></svg></span></span>${x}</div>${entry}`],
+  ];
+  document.getElementById('systems').innerHTML = S.map(([h, why, s, e]) => `
+    <h2 class="sec">${h}</h2><p class="sec-why">${why}</p>
+    <div class="pair"><div><p class="cap">Source · from an abstract chip or a card</p><div class="pane">${s}</div></div>
+    <div><p class="cap">Full entry · where a full-text chip lands</p><div class="pane">${e}</div></div></div>`).join('');
+</script>
+</body>
+</html>

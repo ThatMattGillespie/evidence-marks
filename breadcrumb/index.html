@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Back To All Sources</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FCFCFB; --ink: #141310; --ink-70: #4B463E; --ink-55: #706B63; --ink-35: #8C877F;
+    --line: rgba(20,19,16,.08); --line-2: rgba(20,19,16,.14);
+    --accent: #D9481C; --accent-text: #C04019;
+    --hl: color-mix(in srgb, var(--accent) 14%, transparent);
+    --ground-2: color-mix(in srgb, var(--ink) 4%, var(--bg));
+    --serif: "Source Serif 4", Georgia, serif; --sans: "Barlow", system-ui, sans-serif; --mono: "Space Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); padding: 56px 24px 96px }
+  @media (max-width: 640px) { body { padding: 32px 16px 64px } }
+  p, h3 { margin: 0 }
+  .wrap { max-width: 1260px; margin: 0 auto }
+  .page-eb { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-55); margin: 0 0 12px }
+  h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(28px, 4vw, 40px); line-height: 1.15; margin: 0 0 12px }
+  .lede { color: var(--ink-70); font-size: 16px; line-height: 1.55; max-width: 780px; margin: 0 0 32px }
+  .grid { display: grid; grid-template-columns: repeat(3, 380px); gap: 28px 24px; justify-content: start }
+  @media (max-width: 1260px) { .grid { grid-template-columns: repeat(2, 380px) } }
+  @media (max-width: 840px) { .grid { grid-template-columns: minmax(0, 380px) } }
+  .cap { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-text); margin: 0 0 4px }
+  .cap.ref { color: var(--ink-55) }
+  .why { font-size: 14px; line-height: 1.5; color: var(--ink-70); margin: 0 0 12px; min-height: 63px }
+
+  /* The pane, as built: the grey ground, a head, the Source view */
+  .pane { background: var(--ground-2); border: 1px solid var(--line-2); border-radius: 4px; overflow: hidden; height: 560px; display: flex; flex-direction: column }
+  .ph { display: flex; align-items: center; gap: 8px; padding: 16px; border-bottom: 1px solid var(--line); min-height: 57px }
+  .ph svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex: none }
+  .ib { display: inline-grid; place-items: center; width: 24px; height: 24px; color: var(--ink-55); border-radius: 4px }
+  .t { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink) }
+  .spacer { margin-left: auto }
+  .body { padding: 20px; flex: 1; overflow: hidden; display: flex; flex-direction: column; gap: 8px }
+  .lg { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-70); line-height: 1; margin-bottom: 4px }
+  .lg .dot { color: var(--ink-35) }
+  .cite { display: inline-flex; align-items: center; gap: 4px; font-family: var(--mono); font-size: 11px; font-weight: 700; line-height: 1; padding: 2px 5px; border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: 4px; color: var(--accent-text) }
+  .cite.lib { background: color-mix(in srgb, var(--accent) 9%, transparent) }
+  .cite.q { color: var(--ink-55); border-color: var(--ink-35); border-style: dashed }
+  .cite svg, .ic { width: 10px; height: 12px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.2; stroke-linecap: round }
+  .st { font-family: var(--serif); font-weight: 400; font-size: 19px; line-height: 1.34 }
+  .by { font-size: 12px; line-height: 1.45; color: var(--ink-55) }
+  .note { margin-top: 8px; padding: 12px; border: 1px solid var(--line); border-radius: 4px; background: var(--bg); font-size: 12px; line-height: 1.45; color: var(--ink-70) }
+  .acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding-bottom: 20px; border-bottom: 1px solid var(--line) }
+  .act { display: inline-flex; align-items: center; gap: 4px; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-55); border: 1px solid var(--line-2); border-radius: 4px; padding: 8px 12px; background: none }
+  .act svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.5 }
+  .eb { font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-55); margin-top: 20px }
+  .sum { font-family: var(--serif); font-size: 16px; line-height: 1.6 }
+  .sum mark { background: var(--hl); color: inherit }
+
+  /* Option pieces */
+  .crumb { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); min-width: 0 }
+  .crumb a { color: var(--ink-55); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; white-space: nowrap }
+  .crumb a:hover { color: var(--ink) }
+  .crumb .sep { color: var(--ink-35) }
+  .crumb .n { color: var(--ink-55) }
+  .backlink { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); white-space: nowrap }
+  .backlink .n { color: var(--ink-55) }
+  .stepper { display: inline-flex; align-items: center; gap: 2px; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; color: var(--ink-55) }
+  .stepper b { font-weight: 400; color: var(--ink); padding: 0 4px }
+  .strip { display: flex; gap: 6px; padding: 10px 16px; border-bottom: 1px solid var(--line); overflow: hidden; align-items: center }
+  .strip .cite { opacity: .75 }
+  .strip .cite.on { opacity: 1; border-color: var(--accent-text); box-shadow: 0 0 0 1px var(--accent-text) }
+  .strip .all { margin-left: auto; font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-55); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; white-space: nowrap }
+  .foot { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-70) }
+  .notes { margin-top: 44px; max-width: 780px; font-size: 15px; line-height: 1.55; color: var(--ink-70) }
+  .notes h2 { font-family: var(--serif); font-weight: 400; font-size: 22px; color: var(--ink); margin: 0 0 8px }
+  .notes ul { padding-left: 18px; margin: 0 }
+  .notes li + li { margin-top: 6px }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-full" viewBox="0 0 12 14"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M3.6 4.5h4.8M3.6 7h4.8M3.6 9.5h4.8"/></symbol>
+    <symbol id="i-abs" viewBox="0 0 12 14"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M3.6 4.5h4.8"/></symbol>
+    <symbol id="i-data" viewBox="0 0 12 14"><rect x="1" y="1" width="10" height="12" rx="1.5"/><path d="M4 10.2V8.6M6 10.2V6.6M8 10.2V4.4"/></symbol>
+    <symbol id="i-web" viewBox="0 0 12 14"><circle cx="6" cy="7" r="5"/><ellipse cx="6" cy="7" rx="2.1" ry="5"/><path d="M1 7h10"/></symbol>
+    <symbol id="g-back" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></symbol>
+    <symbol id="g-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+    <symbol id="g-l" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
+    <symbol id="g-r" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></symbol>
+    <symbol id="g-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+    <symbol id="g-book" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></symbol>
+  </defs>
+</svg>
+<main class="wrap">
+  <p class="page-eb">Peace Intel · Back to all sources · 25 Nov 2026</p>
+  <h1>From one source back to all of them</h1>
+  <p class="lede">After clicking chip 2 in an answer, the pane shows that one source. Today the only way back to the list of sources the chat cites is an unlabelled arrow in the head. Each version below makes that way back, or a way across to the next source, visible. Links are underlined; nothing here is final copy.</p>
+  <div class="grid" id="grid"></div>
+  <section class="notes">
+    <h2>Things to weigh</h2>
+    <ul>
+      <li><b>A, B and C</b> are the same idea at three strengths: the arrow you already have, given words. They cost nothing new to build and work for a Source opened from anywhere.</li>
+      <li><b>D and E</b> add a way across, not only back: step to the next cited source without returning to the list. They only apply when the chat cites more than one source, and need a fallback when a source was opened from a search instead.</li>
+      <li><b>F</b> puts the way back where a reader finishes, at the end of the source, and can sit with any of the others.</li>
+      <li>On a phone the pane is a drawer, so the same head carries over; B's breadcrumb would need to shorten to its last two steps.</li>
+      <li>In the Full entry, a breadcrumb gains a step: Sources cited / Source / Full entry.</li>
+    </ul>
+  </section>
+</main>
+<script>
+  const back = '<span class="ib"><svg><use href="#g-back"/></svg></span>';
+  const x = '<span class="ib"><svg><use href="#g-x"/></svg></span>';
+  const source = (foot = '') => `
+    <div class="body">
+      <span class="lg"><span class="cite lib"><b>2</b><svg><use href="#i-full"/></svg></span>Full text <span class="dot">·</span> Systematic review</span>
+      <h3 class="st">Community-based reintegration and the limits of cash transfers</h3>
+      <p class="by">2019 · Adaeze Okafor, Kwame Mensah, Jin Lee</p>
+      <div class="acts"><span class="act"><svg><use href="#g-book"/></svg>Read the full entry</span><span class="act">Original source ↗</span></div>
+      <p class="eb">Abstract</p>
+      <p class="sum"><mark>Across eleven programmes in West Africa, community-based reintegration outperformed cash-only packages on re-recruitment.</mark></p>
+      ${foot}
+    </div>`;
+  const chips = [['abs','i-abs',1],['lib','i-full',2],['lib','i-full',3],['lib','i-data',4],['q','i-web',5],['abs','i-abs',6]];
+  const O = [
+    ['Today', 'The arrow goes back to the list, but nothing says so, and "Source" names the view, not where you can go.', 'ref',
+      `<div class="ph">${back}<span class="t">Source</span><span class="spacer"></span>${x}</div>${source()}`],
+    ['A · Name the way back', 'The arrow keeps its place and gains its destination and the count: "← 06 Sources cited". One label, no new parts.', '',
+      `<div class="ph"><span class="backlink"><svg><use href="#g-back"/></svg><span class="n">06</span>Sources cited</span><span class="spacer"></span>${x}</div>${source()}`],
+    ['B · Breadcrumb', 'Where you are and how you got there: "Sources cited / Source". The first step is a link. Grows to three steps in the Full entry.', '',
+      `<div class="ph"><span class="crumb"><a href="#">Sources cited</a><span class="sep">/</span><span>Source 2</span></span><span class="spacer"></span>${x}</div>${source()}`],
+    ['C · A button, as you described', 'A labelled button in the head, on the right where the eye ends: "See all citations", with a list icon. The arrow stays for going back.', '',
+      `<div class="ph">${back}<span class="t">Source</span><span class="spacer"></span><span class="act" style="padding:6px 10px"><svg><use href="#g-list"/></svg>See all 06</span>${x}</div>${source()}`],
+    ['D · Step through', 'Arrows to the previous and next cited source, and "2 of 6" to show the place. The count opens the full list.', '',
+      `<div class="ph">${back}<span class="t">Source</span><span class="spacer"></span><span class="stepper"><span class="ib"><svg><use href="#g-l"/></svg></span><b>2 of 6</b><span class="ib"><svg><use href="#g-r"/></svg></span></span>${x}</div>${source()}`],
+    ['E · The chips as tabs', "Every chip the chat cites, in a strip under the head, the open one marked. One click to any other source, and \"All\" for the list.", '',
+      `<div class="ph">${back}<span class="t">Source</span><span class="spacer"></span>${x}</div><div class="strip">${chips.map(([c,i,n]) => `<span class="cite ${c}${n===2?' on':''}"><b>${n}</b><svg><use href="#${i}"/></svg></span>`).join('')}<a class="all" href="#">All</a></div>${source()}`],
+    ['F · At the end of the source', 'A line at the foot of the source, where a reader finishes: "See all 6 sources cited", with the next source beside it.', '',
+      `<div class="ph">${back}<span class="t">Source</span><span class="spacer"></span>${x}</div>${source('<div class="foot"><span>← All 6 sources cited</span><span>Next · 3 →</span></div>')}`],
+  ];
+  document.getElementById('grid').innerHTML = O.map(([h, why, cls, pane]) =>
+    `<section><p class="cap ${cls}">${h}</p><p class="why">${why}</p><div class="pane">${pane}</div></section>`).join('');
+</script>
+</body>
+</html>
